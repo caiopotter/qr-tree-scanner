@@ -1,10 +1,10 @@
 <template>
     <v-card>
         <v-card-title>
-            Novo usuário
+            Esqueceu a senha?
         </v-card-title>
         <v-card-text>
-            por favor, preencha os dados abaixo para acessar o sistema:
+            por favor, preencha os dados abaixo para recuperar seu acesso:
         </v-card-text>
         <v-row class="text-center"   
       align="center"
@@ -12,9 +12,9 @@
 
       <v-col
         class="ma-5"
-        lg="10"
-        md="10"
-        sm="10"
+        lg="4"
+        md="6"
+        sm="9"
         xs="12"
       >
         <div class="mt-3">
@@ -24,24 +24,10 @@
               outlined
             ></v-text-field>
         </div>
-        <div>
-          <v-text-field
-              v-model="passwordValue"
-              label="Senha"
-              outlined
-            ></v-text-field>
-        </div>
-        <div>
-          <v-text-field
-              v-model="confirmPasswordValue"
-              label="Confirmar Senha"
-              outlined
-            ></v-text-field>
-        </div>
      
         <div>
           <v-btn dark
-          @click="validateFields">Cadastro
+          @click="validateFields">Enviar Email
           </v-btn>
         </div>
       </v-col>
@@ -53,12 +39,10 @@
 export default {
     data: () => ({
         emailValue: '',
-        passwordValue: '',
-        confirmPasswordValue: '',
     }),
     methods:{
         validateFields(){
-            console.log("validar email e senha!")
+            console.log("validar email!")
         }
     }
 }
