@@ -6,7 +6,6 @@ import './registerServiceWorker'
 import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
-window.qr = require('qr-scanner').default;
 
 new Vue({
   router,
