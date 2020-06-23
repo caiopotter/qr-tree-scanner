@@ -1,14 +1,30 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import SignIn from '../views/SignIn.vue'
+import Scanner from '../views/Scanner.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/inicio',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/',
+    redirect: '/login'
+  },
+  {
+    path: '/login',
+    name: 'SignIn',
+    component: SignIn
+  },
+  {
+    path: '/scan',
+    name: 'Scan',
+    component: Scanner
   },
   {
     path: '/about',

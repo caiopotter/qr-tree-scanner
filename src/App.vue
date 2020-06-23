@@ -1,19 +1,47 @@
 <template>
-  <v-app>
-    <v-app-bar
+  <v-app >
+    <v-navigation-drawer
+    v-model="menu"
+    app
+    clipped
+    color="electric">
+      <v-list 
+          dense
+          nav
+        >
+          <v-list-item two-line>
+                <v-list-item-avatar>
+                  <img src="https://randomuser.me/api/portraits/men/81.jpg">
+                </v-list-item-avatar>
+    
+                <v-list-item-content>
+                  <v-list-item-title>Pequena Floresta</v-list-item-title>
+                  <v-list-item-subtitle>Catálogo</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+  
+            <v-divider class="mb-2"></v-divider>
+          <v-list-item
+            v-for="item in navDrawerItems"
+            :key="item.title"
+            link
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+  
+            <v-list-item-content>
+              <v-list-item-title @click="goTo(item.link)">{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+    </v-navigation-drawer>
+    <v-app-bar v-if="!$route.path.includes('login')"
       app
-      color="primary"
-      dark
+      color="forest"
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          :src="require('./assets/logo.png')"
-          transition="scale-transition"
-          width="40"
-        />
+      <div class="align-center">
+        <v-btn @click="menu=true" icon color="white"><v-icon>mdi-menu</v-icon></v-btn>
       </div>
 
       <v-spacer></v-spacer>
@@ -40,7 +68,19 @@ export default {
   },
 
   data: () => ({
-    //
+    menu: false,
+    navDrawerItems: [
+        { title: 'Escanear código', icon: 'mdi-qrcode-scan', link: '/scan' },
+        { title: 'Coleção', icon: 'mdi-tree', link: '/colecao' },
+        { title: 'Mapa', icon: 'mdi-map', link: '/mapa' },
+        { title: 'Sobre', icon: 'mdi-help-box', link: '/sobre' },
+        { title: 'Sair', icon: 'mdi-logout', link: '/login'},
+      ],
   }),
+  methods:{
+    goTo(link){
+      this.$router.push(link)
+    }
+  },
 };
 </script>

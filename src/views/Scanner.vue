@@ -1,8 +1,5 @@
 <template>
-  <v-container>
-    <div class="home">
-    </div>
-    <div>
+  <v-container class="auto-fill">
       <qrcode-stream :camera="camera" @decode="onDecode">
       <div v-if="validationSuccess" class="validation-success">
         This is a URL
@@ -16,7 +13,6 @@
         Long validation in progress...
       </div>
     </qrcode-stream>
-    </div>
   </v-container>
 </template>
 
@@ -25,7 +21,7 @@
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader';
 
 export default {
-  name: 'Home',
+  name: 'Scanner',
   components: {
     QrcodeStream,
     QrcodeDropZone,
@@ -56,11 +52,28 @@ export default {
     onDecode(result){
       this.camera = 'off'
       this.result = result
+      this.isValid = result.startsWith('http')
+      this.turnCameraOn()
     },
-        resetValidationState () {
+    resetValidationState () {
       this.isValid = undefined
+    },
+    turnCameraOn () {
+      this.camera = 'auto'
+    },
+    turnCameraOff () {
+      this.camera = 'off'
     },
   }
 
 }
 </script>
+<style>
+    .auto-fill{
+        width: auto;
+        overflow: hidden;
+        padding: 0px !important;
+        margin:-12px;
+        height: 100vh;
+    }
+</style>
