@@ -45,6 +45,9 @@ export default {
 
     validationFailure () {
       return this.isValid === false
+    },
+    trees(){
+      return this.$store.getters.treesDiscovered;
     }
   },
 
@@ -52,8 +55,16 @@ export default {
     onDecode(result){
       this.camera = 'off'
       this.result = result
-      this.isValid = result.startsWith('http')
+      this.isValid = this.checkCodeDatabase(result)
       this.turnCameraOn()
+    },
+    checkCodeDatabase(result){
+      let trees = this.trees;
+      trees.forEach((element, index) => {
+        if(result == element.code){
+          this.$store.commit('setTreeDiscovered', index);
+        }
+      });
     },
     resetValidationState () {
       this.isValid = undefined
@@ -75,5 +86,6 @@ export default {
         padding: 0px !important;
         margin:-12px;
         height: 100vh;
+        position: fixed;
     }
 </style>

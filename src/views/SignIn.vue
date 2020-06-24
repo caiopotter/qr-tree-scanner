@@ -5,12 +5,11 @@
       justify="center">
       <v-col cols="12">
         <v-img
-          :src="require('../assets/cefetLogo.png')"
-          class="mb-3 mt-n5"
+          :src="require('../assets/pequenaFlorestaSemFundo.png')"
+          class="mb-n5 mt-n5"
           contain
-          height="200"
-        />
-        <div><span>alterar logo</span></div>
+          height="300"
+        />  
       </v-col>
 
       <v-col 
@@ -104,7 +103,7 @@ import ForgotPasswordForm from '@/components/ForgotPasswordForm.vue'
     }),
     methods: {
       validateFields(){
-        this.$router.push('/inicio')
+        this.$router.push('/scan')
       }
     }
   }

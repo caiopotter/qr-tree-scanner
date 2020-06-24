@@ -10,8 +10,10 @@
           nav
         >
           <v-list-item two-line>
-                <v-list-item-avatar>
-                  <img src="https://randomuser.me/api/portraits/men/81.jpg">
+                <v-list-item-avatar size="50px">
+                  <v-img :src="require('./assets/PequenaFlorestaSemTextoSemFundo.png')"
+                  contain
+                  />
                 </v-list-item-avatar>
     
                 <v-list-item-content>
