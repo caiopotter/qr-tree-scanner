@@ -41,12 +41,20 @@
       app
       color="forest"
     >
-      <div class="align-center">
+      <div v-if="!isCollectionDetailsScreen" class="align-center">
         <v-btn @click="menu=!menu" icon color="white">
           <v-icon v-if="!menu">mdi-menu</v-icon>
           <v-icon v-else>mdi-arrow-collapse-left</v-icon>
           </v-btn>
       </div>
+      <v-row no-gutters v-else>
+          <v-col cols="10">
+            <span style="color:white; font-size:1.2em">{{menuTitle}}</span>
+          </v-col>
+          <v-col class="text-rigth ml-3">
+            <v-icon @click="$router.push('/colecao')" class="" style="color:white">mdi-close</v-icon>
+          </v-col>
+        </v-row>
 
       <v-spacer></v-spacer>
     </v-app-bar>
@@ -81,10 +89,18 @@ export default {
         { title: 'Sair', icon: 'mdi-logout', link: '/login'},
       ],
   }),
+  computed:{
+    isCollectionDetailsScreen(){
+      return this.$route.path.includes('/colecao/')
+    },
+    menuTitle(){
+      return this.$store.getters.menuTitle;
+    }
+  },
   methods:{
     goTo(link){
       this.$router.push(link)
-    }
+    },
   },
 };
 </script>

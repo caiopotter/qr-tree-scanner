@@ -47,7 +47,7 @@ export default {
       return this.isValid === false
     },
     trees(){
-      return this.$store.getters.treesDiscovered;
+      return this.$store.getters.storedTrees;
     }
   },
 
@@ -63,6 +63,8 @@ export default {
       trees.forEach((element, index) => {
         if(result == element.code){
           this.$store.commit('setTreeDiscovered', index);
+          this.$store.commit('setMenuTitle', element.details.name)
+          this.$router.push('/colecao/' + (index+1))
         }
       });
     },

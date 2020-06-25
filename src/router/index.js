@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import SignIn from '../views/SignIn.vue'
 import Scanner from '../views/Scanner.vue'
 import Collection from '../views/Collection.vue'
+import CollectionDetails from '../views/CollectionDetails.vue'
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,11 @@ const routes = [
     path: '/colecao',
     name: 'Collection',
     component: Collection
+  },
+  {
+    path: '/colecao/:id',
+    name: 'Details',
+    component: CollectionDetails
   },
   {
     path: '/scan',
