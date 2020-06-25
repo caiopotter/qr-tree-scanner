@@ -22,11 +22,13 @@
                     Árvore ainda não descoberta
                 </v-card-subtitle>
                 <v-card-subtitle v-else>
-                    {{tree.name}}
+                    {{tree.details.name}}
                 </v-card-subtitle>
             
                 <v-card-actions>
-                    <v-btn text>Detalhes</v-btn>
+                    <v-col cols="12" class="mt-n8 text-right">
+                        <v-btn :disabled="!tree.discovered" text @click="getDetails">Detalhes</v-btn>
+                    </v-col>
                 </v-card-actions>
         
             
@@ -37,6 +39,7 @@
 
 <script>
 export default {
+    name: "TreeCard",
     props:['treeNumber', 'tree'],
     data: () => ({
     }),
@@ -45,6 +48,9 @@ export default {
     },
 
     methods: {
+        getDetails(){
+            this.$emit('details', this.tree)
+        }
     }
 }
 </script>

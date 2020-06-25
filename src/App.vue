@@ -3,7 +3,6 @@
     <v-navigation-drawer
     v-model="menu"
     app
-    clipped
     color="electric">
       <v-list 
           dense
@@ -18,7 +17,7 @@
     
                 <v-list-item-content>
                   <v-list-item-title>Pequena Floresta</v-list-item-title>
-                  <v-list-item-subtitle>Catálogo</v-list-item-subtitle>
+                  <v-list-item-subtitle>Menu</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
   
@@ -43,7 +42,10 @@
       color="forest"
     >
       <div class="align-center">
-        <v-btn @click="menu=true" icon color="white"><v-icon>mdi-menu</v-icon></v-btn>
+        <v-btn @click="menu=!menu" icon color="white">
+          <v-icon v-if="!menu">mdi-menu</v-icon>
+          <v-icon v-else>mdi-arrow-collapse-left</v-icon>
+          </v-btn>
       </div>
 
       <v-spacer></v-spacer>

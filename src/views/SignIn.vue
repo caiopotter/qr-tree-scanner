@@ -103,7 +103,7 @@ import ForgotPasswordForm from '@/components/ForgotPasswordForm.vue'
     }),
     methods: {
       validateFields(){
-        this.$router.push('/scan')
+        this.$router.push('/colecao')
       }
     }
   }
