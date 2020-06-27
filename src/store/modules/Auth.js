@@ -46,12 +46,8 @@ const actions = {
 
       return signinResponse;
     }catch(error){
-      if(error.response.status == 403){
-        Api.displayRequestError(context, error.response.data.msg);
-      }else{
-        Api.displayRequestError(context, "Não foi possível entrar com os dados passados");
-      }
       console.log(error);
+      throw error;
     }
   },
 
@@ -67,8 +63,8 @@ const actions = {
 
       return logoutResponse;
     }catch(error){
-      Api.displayRequestError(context, "Não foi possível fazer logout no servidor");
       console.log(error);
+      throw error;
     }
   }
 }

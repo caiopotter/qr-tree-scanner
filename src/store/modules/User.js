@@ -46,7 +46,6 @@ const actions= {
         Api.isWaitingResponse(context, false);
 
       }catch(error){
-        Api.displayRequestError(context, "Informações do usuário não encontradas.");
         Api.gettingUserInfo(context, false);
         context.dispatch('logout', null, { root: true });
         console.log(error);
