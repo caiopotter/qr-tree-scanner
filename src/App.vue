@@ -32,7 +32,7 @@
             </v-list-item-icon>
   
             <v-list-item-content>
-              <v-list-item-title @click="goTo(item.link)">{{ item.title }}</v-list-item-title>
+              <v-list-item-title @click="goTo(item)">{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -98,8 +98,14 @@ export default {
     }
   },
   methods:{
-    goTo(link){
-      this.$router.push(link)
+    goTo(item){
+      if(item.title == "Sair"){
+        this.$store.dispatch('logout').then(() => {
+          this.$router.push(item.link);
+        });
+      }else{
+        this.$router.push(item.link)
+      }
     },
   },
 };

@@ -48,10 +48,10 @@
               outlined
             ></v-text-field>
         </div>
-     
+        <span>{{errorMessage}}</span>
         <div>
           <v-btn color="electric"
-          @click="validateFields">Entrar
+          @click="loginAttempt" :loading="loading">Entrar
           </v-btn>
         </div>
         <div class="mt-3">
@@ -100,10 +100,33 @@ import ForgotPasswordForm from '@/components/ForgotPasswordForm.vue'
       emailValue: '',
       loginDialog: false,
       forgotPasswordDialog: false,
+      errorMessage: '',
+      loading: false
     }),
     methods: {
-      validateFields(){
-        this.$router.push('/colecao')
+      async loginAttempt(){
+        try{
+          this.loading = true;
+          let result = await this.validateUserData();
+          this.$router.push('/colecao')
+        }catch (e){
+          if(e == 'Error: Request failed with status code 401'){
+            this.errorMessage = 'Usuário ou senha inválidos'
+            setTimeout(()=>{
+              this.errorMessage = ''
+            },5000);
+          }
+        }finally{
+          this.loading = false
+        }
+      },
+      async validateUserData(){
+        let userData = {
+          'email': this.emailValue,
+          'password': this.passwordValue
+        }
+        let userLoginResult = await this.$store.dispatch('signin', userData);
+        return userLoginResult;
       }
     }
   }

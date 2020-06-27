@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Auth from '@/store/modules/Auth'
+import User from '@/store/modules/User'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     loginDialog: false,
+    loading: false,
     video: '',
     menuTitle: undefined,
     trees: [
@@ -50,11 +53,16 @@ export default new Vuex.Store({
     },
     setMenuTitle(state, payload){
       state.menuTitle = payload;
-    }
+    },
+    SET_LOADING_STATE(state, payload){
+      state.loading= payload.isloading;
+    },
   },
   actions: {
   },
   modules: {
+    Auth,
+    User,
   },
   getters: {
     storedTrees(state){
