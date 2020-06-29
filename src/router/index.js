@@ -26,17 +26,20 @@ const routes = [
   {
     path: '/colecao',
     name: 'Collection',
-    component: Collection
+    component: Collection,
+    meta: {forAuth: true}
   },
   {
     path: '/colecao/:id',
     name: 'Details',
-    component: CollectionDetails
+    component: CollectionDetails,
+    meta: {forAuth: true}
   },
   {
     path: '/scan',
     name: 'Scan',
-    component: Scanner
+    component: Scanner,
+    meta: {forAuth: true}
   },
   {
     path: '/about',

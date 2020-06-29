@@ -20,6 +20,26 @@ window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + Vue.auth.get
 
 axios.defaults.baseURL = 'http://localhost:8000/';
 
+//Route Guards
+router.beforeEach(
+	(to, from, next) => {
+
+		if (to.matched.some(record => record.meta.forVisitors)) {
+			if (Vue.auth.isAuthenticated()) {
+				next({
+					path: '/colecao'
+				})
+			} else next()
+		} else if (to.matched.some(record => record.meta.forAuth)) {
+			if (!Vue.auth.isAuthenticated()) {
+				next({
+					path: '/login'
+				})
+			} else next()
+		} else next()
+	}
+);
+
 
 new Vue({
   router,
