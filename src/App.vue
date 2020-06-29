@@ -3,14 +3,14 @@
     <v-navigation-drawer
     v-model="menu"
     app
-    color="electric">
+    color="light">
       <v-list 
           dense
           nav
         >
           <v-list-item two-line>
                 <v-list-item-avatar size="50px">
-                  <v-img :src="require('./assets/PequenaFlorestaSemTextoSemFundo.png')"
+                  <v-img :src="require('./assets/PequenaFlorestaSemTexto.png')"
                   contain
                   />
                 </v-list-item-avatar>
@@ -28,11 +28,13 @@
             link
           >
             <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon v-if="$route.path.includes(item.link)" style="color:green">{{ item.icon }}</v-icon>
+              <v-icon v-else>{{ item.icon }}</v-icon>
             </v-list-item-icon>
   
             <v-list-item-content>
-              <v-list-item-title @click="goTo(item)">{{ item.title }}</v-list-item-title>
+              <v-list-item-title v-if="$route.path.includes(item.link)" style="color:green" nav @click="goTo(item)">{{ item.title }}</v-list-item-title>
+              <v-list-item-title v-else nav @click="goTo(item)">{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -52,7 +54,7 @@
             <span style="color:white; font-size:1.2em">{{menuTitle}}</span>
           </v-col>
           <v-col class="text-rigth ml-3">
-            <v-icon @click="$router.push('/colecao')" class="" style="color:white">mdi-close</v-icon>
+            <v-icon @click="$router.push('/colecao')" class="left-absolute-align" style="color:white">mdi-close</v-icon>
           </v-col>
         </v-row>
 
@@ -110,3 +112,10 @@ export default {
   },
 };
 </script>
+<style>
+  .left-absolute-align{
+    position: absolute !important;
+    right: 5%;
+    top:30%;
+  }
+</style>
