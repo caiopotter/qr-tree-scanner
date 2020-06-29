@@ -33,12 +33,10 @@
 </template>
 
 <script>
-import TreeCard from '@/components/TreeCard';
 
 export default {
   name: 'CollectionDetails',
   components: {
-    TreeCard
   },
   data: () => ({
       selectedTree: {},
