@@ -51,6 +51,19 @@ const actions = {
     }
   },
 
+  async signup(context, payload){
+    try{
+      Api.isWaitingResponse(context, true);
+      const signinResponse= await UserApi.signup(payload);
+      Api.isWaitingResponse(context, false);
+
+      return signinResponse;
+    }catch(error){
+      console.log(error);
+      throw error;
+    }
+  },
+
   async logout(context){
     try{
       Api.isWaitingResponse(context, true);

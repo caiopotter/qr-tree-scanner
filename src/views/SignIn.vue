@@ -36,6 +36,7 @@
         </div>
         <div class="mt-3">
           <v-text-field
+              color="green"
               v-model="emailValue"
               label="Email"
               outlined
@@ -43,6 +44,7 @@
         </div>
         <div>
           <v-text-field
+              color="green"
               v-model="passwordValue"
               label="Senha"
               outlined
@@ -65,8 +67,8 @@
             </v-col>
           </v-row>
           <v-btn @click="loginDialog = true" color="light">Cadastre-se</v-btn>
-          <v-dialog v-model="loginDialog" max-width="500px">
-            <SignUpForm/>
+          <v-dialog fullscreen v-model="loginDialog" max-width="500px">
+            <Sign-Up-Form @closeDialog="loginDialog = false"></Sign-Up-Form>
           </v-dialog>
         </div>
          <div class="mt-3">

@@ -4,7 +4,7 @@ export default{
     },
 
     signup(userData){
-        return axios.post('/api/auth/login', userData);
+        return axios.post('/api/auth/signup', userData);
       },
   
     logout(){
