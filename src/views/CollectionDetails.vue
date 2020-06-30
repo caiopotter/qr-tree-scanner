@@ -9,38 +9,53 @@
                         <v-col class="mb-n4" cols="12">
                             <span style="font-weight:bold;">Nome popular: {{selectedTree.common_name}}</span>
                         </v-col>
-                        <v-col class="mb-n4" cols="12">
+                        <v-col class="mb-n2" cols="12">
                             <span style="font-weight:bold;">Nome científico: {{selectedTree.scientific_name}}</span>
                         </v-col>
                         <v-col class="mb-n4" cols="12">
-                            <span style="font-weight:bold;">Características: {{selectedTree.feature}}</span>
+                            <v-btn class="mb-1" block rounded @click="featuresExpand = !featuresExpand">
+                                Características
+                                <v-spacer></v-spacer>
+                                <v-icon v-if="!featuresExpand" color="green">mdi-chevron-down</v-icon>
+                                <v-icon v-else color="green">mdi-chevron-up</v-icon>
+                            </v-btn>
+                            <v-expand-transition mode="out-in">
+                                <span style="font-size:0.9em" v-if="featuresExpand">{{selectedTree.feature}}</span>
+                            </v-expand-transition>
                         </v-col>
                         <v-col class="mb-n4" cols="12">
-                            <span style="font-weight:bold;">Origem: {{selectedTree.origin}}</span>
+                            <v-btn class="mb-1" block rounded @click="originExpand = !originExpand">
+                                Origem
+                                <v-spacer></v-spacer>
+                                <v-icon v-if="!originExpand" color="green">mdi-chevron-down</v-icon>
+                                <v-icon v-else color="green">mdi-chevron-up</v-icon>
+                            </v-btn>
+                            <v-expand-transition mode="out-in">
+                                <span style="font-size:0.9em" v-if="originExpand">{{selectedTree.origin}}</span>
+                            </v-expand-transition>
                         </v-col>
                         <v-col class="mb-n4" cols="12">
-                            <span style="font-weight:bold;">Tipo da madeira: {{selectedTree.wood_type}}</span>
+                            <v-btn class="mb-1" block rounded @click="woodTypeExpand = !woodTypeExpand">
+                                Tipo de madeira
+                                <v-spacer></v-spacer>
+                                <v-icon v-if="!woodTypeExpand" color="green">mdi-chevron-down</v-icon>
+                                <v-icon v-else color="green">mdi-chevron-up</v-icon>
+                            </v-btn>
+                            <v-expand-transition mode="out-in">
+                                <span style="font-size:0.9em" v-if="woodTypeExpand">{{selectedTree.wood_type}}</span>
+                            </v-expand-transition>
                         </v-col>
                         <v-col class="mb-n4" cols="12">
-                            <span style="font-weight:bold;">Utilidade: {{selectedTree.utility}}</span>
-                        </v-col>
-                        <v-col v-if="selectedTree.text" cols="12">
-                            <v-card outlined>
-                                <v-card-text>
-                                    {{adjustTextArea}}
-                                </v-card-text>
-                                <v-card-actions>
-                                    <v-spacer></v-spacer>
-                            
-                                    <v-btn
-                                    icon
-                                    @click="expandTreeText = !expandTreeText"
-                                    >
-                                    <v-icon>{{ expandTreeText ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-col>
+                            <v-btn class="mb-1" block rounded @click="utilityExpand = !utilityExpand">
+                                Utilidade
+                                <v-spacer></v-spacer>
+                                <v-icon v-if="!utilityExpand" color="green">mdi-chevron-down</v-icon>
+                                <v-icon v-else color="green">mdi-chevron-up</v-icon>
+                            </v-btn>
+                            <v-expand-transition mode="out-in">
+                                <span style="font-size:0.9em" v-if="utilityExpand">{{selectedTree.utility}}</span>
+                            </v-expand-transition>
+                        </v-col>                        
                     </v-row>
                 </v-card-actions>
             </v-card>
@@ -57,6 +72,10 @@ export default {
   data: () => ({
       expandTreeText: false,
       treeTextLengthLimit: 150,
+      featuresExpand: false,
+      originExpand: false,
+      woodTypeExpand: false,
+      utilityExpand: false,
   }),
 
   computed: {
