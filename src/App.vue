@@ -78,7 +78,11 @@ export default {
 
   components: {
   },
-
+  created(){
+    this.$store.dispatch('checkAuthState');
+    this.getUserInfoFromServer();
+    this.$store.dispatch('getTreesFromServer');
+  },
   data: () => ({
     menu: false,
     navDrawerItems: [
@@ -95,7 +99,11 @@ export default {
     },
     menuTitle(){
       return this.$store.getters.menuTitle;
-    }
+    },
+    isUserLoggedIn(){
+      return this.$store.getters.userAuthState;
+    },
+
   },
   methods:{
     goTo(item){
@@ -107,6 +115,13 @@ export default {
         this.$router.push(item.link)
       }
     },
+    async getUserInfoFromServer(){
+      if(this.isUserLoggedIn){
+        await this.$store.dispatch('getUserInfoFromServer').then(response => {
+          this.$store.dispatch('getUserDiscoveredTrees')
+        });
+      }
+    }
   },
 };
 </script>
