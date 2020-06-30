@@ -4,6 +4,7 @@ import UserApi from '../../api/UserApi'
 
 const state= {
   user: null,
+  userTrees: [],
   gettingUserInfo: false
 }
 
@@ -12,6 +13,10 @@ const getters= {
     if(state.user != null && state.user != undefined){
       return state.user;
     }
+  },
+
+  userTrees(state){
+    return state.userTrees;
   },
 
   userInfoStatus(state){
@@ -26,6 +31,14 @@ const mutations= {
 
   GETTING_USER_INFO(state, payload){
     state.gettingUserInfo= payload.gettingUserInfo;
+  },
+  setUserDiscoveredTrees(state, payload){
+    for(let tree of payload){
+      state.userTrees.push(tree);
+    }
+  },
+  addTreeToUserDiscoveredTreesArray(state, payload){
+    state.userTrees.push(payload)
   }
 }
 
@@ -51,6 +64,21 @@ const actions= {
         console.log(error);
       }
     }
+  },
+  async getUserDiscoveredTrees(context){
+      try{
+        Api.isWaitingResponse(context, true);
+
+        let userId = this.getters.user.id;
+        const userTrees = await UserApi.getUserDiscoveredTrees(userId);
+        context.commit('setUserDiscoveredTrees', userTrees.data);
+
+        Api.isWaitingResponse(context, false);
+
+      }catch(error){
+        console.log(error);
+        return error;
+      }
   }
 }
 

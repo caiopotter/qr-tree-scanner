@@ -2,11 +2,27 @@
     <v-card flat>
         <v-card-actions>
             <v-card flat>
-                <v-img :src="selectedTree.img"></v-img>
+                <v-img v-if="selectedTree.img" :src="selectedTree.img"></v-img>
+                <v-img v-else :src="require('../assets/PequenaFlorestaSemTextoSemFundo.png')"></v-img>
                 <v-card-actions>
                     <v-row>
-                        <v-col class="mb-n4" v-for="(detail, propName, index) in selectedTree.details" :key="index" cols="12">
-                            <span style="font-weight:bold;">{{translatePropName(propName)}}: {{detail}}</span>
+                        <v-col class="mb-n4" cols="12">
+                            <span style="font-weight:bold;">Nome popular: {{selectedTree.common_name}}</span>
+                        </v-col>
+                        <v-col class="mb-n4" cols="12">
+                            <span style="font-weight:bold;">Nome científico: {{selectedTree.scientific_name}}</span>
+                        </v-col>
+                        <v-col class="mb-n4" cols="12">
+                            <span style="font-weight:bold;">Características: {{selectedTree.feature}}</span>
+                        </v-col>
+                        <v-col class="mb-n4" cols="12">
+                            <span style="font-weight:bold;">Origem: {{selectedTree.origin}}</span>
+                        </v-col>
+                        <v-col class="mb-n4" cols="12">
+                            <span style="font-weight:bold;">Tipo da madeira: {{selectedTree.wood_type}}</span>
+                        </v-col>
+                        <v-col class="mb-n4" cols="12">
+                            <span style="font-weight:bold;">Utilidade: {{selectedTree.utility}}</span>
                         </v-col>
                         <v-col v-if="selectedTree.text" cols="12">
                             <v-card outlined>
@@ -39,12 +55,14 @@ export default {
   components: {
   },
   data: () => ({
-      selectedTree: {},
       expandTreeText: false,
       treeTextLengthLimit: 150,
   }),
 
   computed: {
+      selectedTree(){
+        return this.$store.getters.scannedTree;
+      },
       adjustTextArea(){
           if(!this.selectedTree.text){
               return;
@@ -81,12 +99,7 @@ export default {
       },
   },
   mounted(){
-      let trees = this.$store.getters.storedTrees;
-      trees.forEach((element, index) => {
-          if((index + 1) == this.$route.params.id){
-              this.selectedTree = element;
-          }
-      });
+      
     }
 
 }

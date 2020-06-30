@@ -14,5 +14,11 @@ export default{
     getLoggedUserFromServer(){
       return axios.get('/api/auth/user');
     },
+
+    getUserDiscoveredTrees(userId){
+      return axios.get('/api/user/trees', {
+        params: {userId: userId}
+      })
+    }
   }
   

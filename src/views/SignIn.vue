@@ -111,6 +111,7 @@ import ForgotPasswordForm from '@/components/ForgotPasswordForm.vue'
           this.loading = true;
           let result = await this.validateUserData();
           this.$store.dispatch('getTreesFromServer');
+          this.$store.dispatch('getUserDiscoveredTrees', this.$store.getters.user.id)
           this.$router.push('/colecao')
         }catch (e){
           if(e == 'Error: Request failed with status code 401'){

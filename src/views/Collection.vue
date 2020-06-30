@@ -5,10 +5,14 @@
                 <span style="font-weight: bold; font-size: 1.3em">Sua coleção:</span>
             </v-col>
             <v-col cols="12" class="mt-n6">
-                <span style="font-weight: bold; font-size: 0.9em">{{discoveredTrees}} de {{storedTrees.length}} árvores descobertas</span>
+                <span style="font-weight: bold; font-size: 0.9em">{{discoveredTrees.length}} de {{storedTrees}} árvores descobertas</span>
             </v-col>
-            <v-col cols="12" v-for="(tree, index) in storedTrees" :key="index">
-                <tree-card :treeNumber="index+1" :tree="tree" @details="details"></tree-card>
+            <v-col class="mb-n6" cols="12" v-for="(tree, index) in discoveredTrees" :key="index">
+                <tree-card :treeNumber="index+1" :tree="tree" :discovered="true" @details="details"></tree-card>
+            </v-col>
+            <v-col class="mb-n6" cols="12" v-if="remainingTreesNumber > 0">
+                <tree-card v-for="(n) in remainingTreesNumber" :key="discoveredTrees.length + n -1"
+                :treeNumber="discoveredTrees.length + n" :discovered="false"></tree-card>
             </v-col>
         </v-row>
     </v-container>
@@ -30,29 +34,19 @@ export default {
           return this.$store.getters.storedTrees;
       },
       discoveredTrees(){
-          let trees = this.$store.getters.storedTrees;
-          let discoveredTrees = 0;
-          for(let tree of trees){
-              if(tree.discovered){
-                  discoveredTrees += 1
-              }
-          }
-          return discoveredTrees;
+          return this.$store.getters.userTrees;
       },
+      remainingTreesNumber(){
+          return this.$store.getters.storedTrees - this.$store.getters.userTrees.length;
+      }
 
   },
 
   methods: {
     details(tree){
-        let trees = this.$store.getters.storedTrees
-        let treeId = undefined;
-        trees.forEach((element, index) => {
-            if(element.details.name == tree.details.name){
-                treeId = (index+1);
-                this.$store.commit('setMenuTitle', tree.details.name)
-            }
-        });
-        this.$router.push('/colecao/' + treeId)
+        this.$store.commit('setScannedTree', tree)
+        this.$store.commit('setMenuTitle', tree.common_name)
+        this.$router.push('/colecao/detalhes')
     }
   }
 

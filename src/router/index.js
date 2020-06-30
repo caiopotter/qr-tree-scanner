@@ -30,7 +30,7 @@ const routes = [
     meta: {forAuth: true}
   },
   {
-    path: '/colecao/:id',
+    path: '/colecao/detalhes',
     name: 'Details',
     component: CollectionDetails,
     meta: {forAuth: true}

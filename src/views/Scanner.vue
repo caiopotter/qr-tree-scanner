@@ -58,14 +58,13 @@ export default {
       this.isValid = this.checkCodeDatabase(result)
       this.turnCameraOn()
     },
-    checkCodeDatabase(result){
-      let trees = this.trees;
-      trees.forEach((element, index) => {
-        if(result == element.code){
-          this.$store.commit('setTreeDiscovered', index);
-          this.$store.commit('setMenuTitle', element.details.name)
-          this.$router.push('/colecao/' + (index+1))
-        }
+    async checkCodeDatabase(result){
+      this.$store.dispatch('getQRCodeTree', result).then(response => {
+        this.$store.dispatch('setTreeDiscovered', response.data.id);
+        this.$store.commit('addTreeToUserDiscoveredTreesArray', response.data)
+        this.$store.commit('setScannedTree', response.data);
+        this.$store.commit('setMenuTitle', response.data.common_name);
+        this.$router.push('/colecao/detalhes')
       });
     },
     resetValidationState () {
