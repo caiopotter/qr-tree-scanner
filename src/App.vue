@@ -81,7 +81,6 @@ export default {
   created(){
     this.$store.dispatch('checkAuthState');
     this.getUserInfoFromServer();
-    this.$store.dispatch('getTreesFromServer');
   },
   data: () => ({
     menu: false,
@@ -118,7 +117,8 @@ export default {
     async getUserInfoFromServer(){
       if(this.isUserLoggedIn){
         await this.$store.dispatch('getUserInfoFromServer').then(response => {
-          this.$store.dispatch('getUserDiscoveredTrees')
+          this.$store.dispatch('getUserDiscoveredTrees');
+          this.$store.dispatch('getTreesFromServer');
         });
       }
     }
