@@ -32,7 +32,7 @@
         xs="12"
       >
         <div>
-          <span>Já possui cadastro? Faça o Login!</span>
+          <span style="font-weight: bold; font-size:0.9em">Já possui cadastro? Faça o Login!</span>
         </div>
         <div class="mt-3">
           <v-text-field
@@ -40,6 +40,7 @@
               v-model="emailValue"
               label="Email"
               outlined
+              prepend-inner-icon="mdi-account"
             ></v-text-field>
         </div>
         <div>
@@ -48,6 +49,10 @@
               v-model="passwordValue"
               label="Senha"
               outlined
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPassword ? 'text' : 'password'"
+              @click:append="showPassword = !showPassword"
+              prepend-inner-icon="mdi-key"
             ></v-text-field>
         </div>
         <span>{{errorMessage}}</span>
@@ -71,16 +76,6 @@
             <Sign-Up-Form @closeDialog="loginDialog = false"></Sign-Up-Form>
           </v-dialog>
         </div>
-         <div class="mt-3">
-          <v-dialog v-model="forgotPasswordDialog" max-width="500px">
-            <template v-slot:activator="{ on }">
-              <a v-on="on">
-                Esqueceu sua senha?
-              </a>
-            </template>
-            <ForgotPasswordForm/>
-          </v-dialog>
-        </div>
       </v-col>
     </v-row>
   </v-container>
@@ -94,11 +89,12 @@ import ForgotPasswordForm from '@/components/ForgotPasswordForm.vue'
     name: 'SignIn',
     components:{
       SignUpForm,
-      ForgotPasswordForm
+      ForgotPasswordForm,
     },
 
     data: () => ({
       passwordValue: '',
+      showPassword: false,
       emailValue: '',
       loginDialog: false,
       forgotPasswordDialog: false,
