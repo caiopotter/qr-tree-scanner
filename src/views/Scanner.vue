@@ -48,6 +48,9 @@ export default {
     },
     trees(){
       return this.$store.getters.storedTrees;
+    },
+    userDiscoveredTrees(){
+      return this.$store.getters.userTrees;
     }
   },
 
@@ -60,8 +63,17 @@ export default {
     },
     async checkCodeDatabase(result){
       this.$store.dispatch('getQRCodeTree', result).then(response => {
-        this.$store.dispatch('setTreeDiscovered', response.data.id);
-        this.$store.commit('addTreeToUserDiscoveredTreesArray', response.data)
+        let isQRCodeRepeated = false;
+        for(let discoveredTree of this.userDiscoveredTrees){
+          if(discoveredTree.id == response.data.id){
+            isQRCodeRepeated = true;
+            break;
+          }
+        }
+        if(!isQRCodeRepeated){
+          this.$store.dispatch('setTreeDiscovered', response.data.id);
+          this.$store.commit('addTreeToUserDiscoveredTreesArray', response.data)
+        }
         this.$store.commit('setScannedTree', response.data);
         this.$store.commit('setMenuTitle', response.data.common_name);
         this.$router.push('/colecao/detalhes')
