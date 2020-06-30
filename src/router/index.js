@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import SignIn from '../views/SignIn.vue'
 import Scanner from '../views/Scanner.vue'
 import Collection from '../views/Collection.vue'
@@ -9,11 +8,6 @@ import CollectionDetails from '../views/CollectionDetails.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/inicio',
-    name: 'Home',
-    component: Home
-  },
   {
     path: '/',
     redirect: '/login'
@@ -48,7 +42,8 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  },
+  { path: '*', redirect: '/colecao' }
 ]
 
 const router = new VueRouter({
