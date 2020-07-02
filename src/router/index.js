@@ -4,6 +4,7 @@ import SignIn from '../views/SignIn.vue'
 import Scanner from '../views/Scanner.vue'
 import Collection from '../views/Collection.vue'
 import CollectionDetails from '../views/CollectionDetails.vue'
+import GardenMap from '../views/GardenMap.vue'
 
 Vue.use(VueRouter)
 
@@ -36,7 +37,13 @@ const routes = [
     meta: {forAuth: true}
   },
   {
-    path: '/about',
+    path: '/mapa',
+    name: 'Map',
+    component: GardenMap,
+    meta: {forAuth: true}
+  },
+  {
+    path: '/sobre',
     name: 'About',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
