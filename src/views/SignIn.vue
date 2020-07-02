@@ -128,6 +128,11 @@ import ForgotPasswordForm from '@/components/ForgotPasswordForm.vue'
         let userLoginResult = await this.$store.dispatch('signin', userData);
         return userLoginResult;
       }
+    },
+    beforeCreate(){
+      if(this.$store.getters.userAuthState){
+        this.$router.push('/colecao')
+      }
     }
   }
 </script>
