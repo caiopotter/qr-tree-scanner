@@ -39,6 +39,9 @@ const mutations= {
   },
   addTreeToUserDiscoveredTreesArray(state, payload){
     state.userTrees.push(payload)
+  },
+  clearUserDiscoveredTrees(state){
+    state.userTrees = [];
   }
 }
 

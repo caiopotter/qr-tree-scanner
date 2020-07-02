@@ -85,8 +85,8 @@ export default {
   data: () => ({
     menu: false,
     navDrawerItems: [
-        { title: 'Escanear código', icon: 'mdi-qrcode-scan', link: '/scan' },
         { title: 'Coleção', icon: 'mdi-tree', link: '/colecao' },
+        { title: 'Escanear código', icon: 'mdi-qrcode-scan', link: '/scan' },
         { title: 'Mapa', icon: 'mdi-map', link: '/mapa' },
         { title: 'Sobre', icon: 'mdi-help-box', link: '/sobre' },
         { title: 'Sair', icon: 'mdi-logout', link: '/login'},
@@ -108,6 +108,8 @@ export default {
     goTo(item){
       if(item.title == "Sair"){
         this.$store.dispatch('logout').then(() => {
+          this.$store.commit('clearUserDiscoveredTrees');
+          this.$store.commit('SET_LOGGEDIN_USER', {user: null});
           this.$router.push(item.link);
         });
       }else{
