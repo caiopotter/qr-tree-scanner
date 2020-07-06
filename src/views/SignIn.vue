@@ -55,9 +55,9 @@
               prepend-inner-icon="mdi-key"
             ></v-text-field>
         </div>
-        <span>{{errorMessage}}</span>
+        <span style="color:red; font-weight: bold; font-size:0.9em">{{errorMessage}}</span>
         <div>
-          <v-btn color="electric"
+          <v-btn style="color:var(--v-forest-base)" color="leaf"
           @click="loginAttempt" :loading="loading">Entrar
           </v-btn>
         </div>
@@ -66,14 +66,55 @@
             <v-col xs="1">
               <v-divider></v-divider>
             </v-col>
-            <span>ou</span>
+            <span style="font-weight: bold; font-size:0.8em">não possui conta?</span>
             <v-col xs="1">
               <v-divider></v-divider>
             </v-col>
           </v-row>
-          <v-btn @click="loginDialog = true" color="light">Cadastre-se</v-btn>
+          <v-btn small text class="mt-2" @click="loginDialog = true" color="tin">Cadastre-se</v-btn>
           <v-dialog fullscreen v-model="loginDialog" max-width="500px">
             <Sign-Up-Form @closeDialog="loginDialog = false"></Sign-Up-Form>
+          </v-dialog>
+        </div>
+        <div class="mt-3">
+          <v-row>
+            <v-col xs="1">
+              <v-divider></v-divider>
+            </v-col>
+            <span style="font-weight: bold; font-size:0.8em">ou</span>
+            <v-col xs="1">
+              <v-divider></v-divider>
+            </v-col>
+          </v-row>
+          <v-btn text small @click="visitorDialog = true" color="tin">Entre como visitante</v-btn>
+          <v-dialog v-model="visitorDialog" max-width="500px">
+            <v-card style="overflow: hidden">
+              <v-card-title class="mt-n1" :style="{'background-color': 'var(--v-' + 'forest' + '-base)'}">
+                <span style="color:white">
+                    Visitante
+                </span>
+                <v-spacer></v-spacer>
+                <v-icon @click="visitorDialog = false" style="color:white">mdi-close</v-icon>
+              </v-card-title>
+              <v-card-actions>
+                <v-row class="text-center">
+                  <v-col cols="12">
+                    <span style="color:grey; font-size:0.9em">Deseja entrar na plataforma como visitante? Dessa forma, nenhuma informação será salva.</span>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-btn color="forest" style="color:white"
+                      @click="loginAttempt" :loading="loading">Entrar
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-btn outlined color="forest" style="color:white"
+                      @click="visitorDialog = false">Cancelar
+                    </v-btn>
+                  </v-col>
+                </v-row>
+                
+              </v-card-actions>
+            </v-card>
           </v-dialog>
         </div>
       </v-col>
@@ -99,7 +140,8 @@ import ForgotPasswordForm from '@/components/ForgotPasswordForm.vue'
       loginDialog: false,
       forgotPasswordDialog: false,
       errorMessage: '',
-      loading: false
+      loading: false,
+      visitorDialog: false,
     }),
     methods: {
       async loginAttempt(){
