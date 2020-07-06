@@ -16,7 +16,9 @@ export default new Vuetify({
         themes: {
           light: {
               electric: '#3CC47C',
-              forest: '1E392A',
+              forest: '#1E392A',
+              leaf: '#C9D439',
+              wood: '#7C4D25',
               light: '#E9C893',
               tin: '#828081',
               light_grey: '#BDBDBD'
