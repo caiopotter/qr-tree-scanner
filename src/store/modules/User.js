@@ -5,7 +5,8 @@ import UserApi from '../../api/UserApi'
 const state= {
   user: null,
   userTrees: [],
-  gettingUserInfo: false
+  gettingUserInfo: false,
+  isVisitor: false,
 }
 
 const getters= {
@@ -13,6 +14,10 @@ const getters= {
     if(state.user != null && state.user != undefined){
       return state.user;
     }
+  },
+
+  isVisitor(state){
+    return state.isVisitor;
   },
 
   userTrees(state){
@@ -32,6 +37,11 @@ const mutations= {
   GETTING_USER_INFO(state, payload){
     state.gettingUserInfo= payload.gettingUserInfo;
   },
+
+  setUserIsVisitor(state, payload){
+    state.isVisitor = payload;
+  },
+
   setUserDiscoveredTrees(state, payload){
     for(let tree of payload){
       state.userTrees.push(tree);

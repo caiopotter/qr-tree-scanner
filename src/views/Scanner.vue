@@ -56,7 +56,7 @@ export default {
 
   methods: {
     onDecode(result){
-      this.camera = 'off'
+      this.turnCameraOff()
       this.result = result
       this.isValid = this.checkCodeDatabase(result)
       this.turnCameraOn()
@@ -71,7 +71,9 @@ export default {
           }
         }
         if(!isQRCodeRepeated){
-          this.$store.dispatch('setTreeDiscovered', response.data.id);
+          if(!this.$store.getters.isVisitor){
+            this.$store.dispatch('setTreeDiscovered', response.data.id);
+          }
           this.$store.commit('addTreeToUserDiscoveredTreesArray', response.data)
         }
         this.$store.commit('setScannedTree', response.data);

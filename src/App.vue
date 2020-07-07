@@ -17,7 +17,7 @@
     
                 <v-list-item-content>
                   <v-list-item-title>Pequena Floresta</v-list-item-title>
-                  <v-list-item-subtitle>Menu</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{userName}}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
   
@@ -102,19 +102,35 @@ export default {
     isUserLoggedIn(){
       return this.$store.getters.userAuthState;
     },
+    userName(){
+      if(this.$store.getters.user){
+        return this.$store.getters.user.name
+      }
+      return 'Visitante';
+    }
 
   },
   methods:{
     goTo(item){
       if(item.title == "Sair"){
+        this.logout(item);
+      }else{
+        this.$router.push(item.link)
+      }
+    },
+    logout(item){
+      if(this.$store.getters.isVisitor){
+        this.$store.commit('setUserIsVisitor', false);
+        this.$store.commit('clearUserDiscoveredTrees');
+        this.$router.push(item.link);
+      }else{
         this.$store.dispatch('logout').then(() => {
           this.$store.commit('clearUserDiscoveredTrees');
           this.$store.commit('SET_LOGGEDIN_USER', {user: null});
           this.$router.push(item.link);
         });
-      }else{
-        this.$router.push(item.link)
       }
+
     },
     async getUserInfoFromServer(){
       if(this.isUserLoggedIn){
@@ -122,6 +138,9 @@ export default {
           this.$store.dispatch('getUserDiscoveredTrees');
           this.$store.dispatch('getTreesFromServer');
         });
+      }else{
+        this.$store.dispatch('getTreesFromServer');
+        this.$store.commit('setUserIsVisitor', true);
       }
     }
   },

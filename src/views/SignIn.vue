@@ -103,7 +103,7 @@
                   </v-col>
                   <v-col cols="6">
                     <v-btn color="forest" style="color:white"
-                      @click="loginAttempt" :loading="loading">Entrar
+                      @click="visitorLoginAttempt" :loading="loading">Entrar
                     </v-btn>
                   </v-col>
                   <v-col cols="6">
@@ -169,7 +169,14 @@ import ForgotPasswordForm from '@/components/ForgotPasswordForm.vue'
         }
         let userLoginResult = await this.$store.dispatch('signin', userData);
         return userLoginResult;
-      }
+      },
+      visitorLoginAttempt(){
+        this.loading = true;
+        this.$store.commit('setUserIsVisitor', true);
+        this.$store.dispatch('getTreesFromServer');
+        this.loading = false;
+        this.$router.push('/colecao');
+      },
     },
     beforeCreate(){
       if(this.$store.getters.userAuthState){

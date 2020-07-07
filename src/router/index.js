@@ -22,25 +22,21 @@ const routes = [
     path: '/colecao',
     name: 'Collection',
     component: Collection,
-    meta: {forAuth: true}
   },
   {
     path: '/colecao/detalhes',
     name: 'Details',
     component: CollectionDetails,
-    meta: {forAuth: true}
   },
   {
     path: '/scan',
     name: 'Scan',
     component: Scanner,
-    meta: {forAuth: true}
   },
   {
     path: '/mapa',
     name: 'Map',
     component: GardenMap,
-    meta: {forAuth: true}
   },
   {
     path: '/sobre',
