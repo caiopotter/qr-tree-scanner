@@ -76,6 +76,36 @@ const actions= {
             return error
         }
   },
+  async addTreeComment(context, payload){
+    try{
+        Api.isWaitingResponse(context, true);
+
+        const response = await TreeApi.addTreeComment(payload);
+
+        Api.isWaitingResponse(context, false);
+
+        return response;
+
+        }catch(error){
+            console.log(error);
+            return error
+        }
+  },
+  async getTreeComments(context, payload){
+    try{
+        Api.isWaitingResponse(context, true);
+
+        const treeComments = await TreeApi.getTreeComments(payload);
+
+        Api.isWaitingResponse(context, false);
+
+        return treeComments;
+
+        }catch(error){
+            console.log(error);
+            return error
+        }
+  }
 }
 
 export default {

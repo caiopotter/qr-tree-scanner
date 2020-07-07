@@ -29,6 +29,9 @@ export default new Vuex.Store({
   getters: {
     menuTitle(state){
       return state.menuTitle
+    },
+    loading(state){
+      return state.loading;
     }
   }
 })

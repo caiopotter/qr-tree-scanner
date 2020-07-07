@@ -55,7 +55,10 @@
                             <v-expand-transition mode="out-in">
                                 <span style="font-size:0.9em" v-if="utilityExpand">{{selectedTree.utility}}</span>
                             </v-expand-transition>
-                        </v-col>                        
+                        </v-col>  
+                        <v-col class="mt-3">
+                            <comments :selectedTree="selectedTree"></comments>
+                        </v-col>                      
                     </v-row>
                 </v-card-actions>
             </v-card>
@@ -64,10 +67,12 @@
 </template>
 
 <script>
+import Comments from '@/components/Comments';
 
 export default {
   name: 'CollectionDetails',
   components: {
+      Comments
   },
   data: () => ({
       expandTreeText: false,

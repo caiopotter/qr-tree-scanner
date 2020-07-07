@@ -14,5 +14,15 @@ export default{
           code: code
         }
       });
+    },
+    getTreeComments(treeId){
+      return axios.get('/api/tree/comments', {
+        params: {
+          treeId: treeId
+        }
+      })
+    },
+    addTreeComment(treeData){
+      return axios.post('/api/tree/comment', treeData)
     }
   }

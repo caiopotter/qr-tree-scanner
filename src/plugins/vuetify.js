@@ -21,7 +21,9 @@ export default new Vuetify({
               wood: '#7C4D25',
               light: '#E9C893',
               tin: '#828081',
-              light_grey: '#BDBDBD'
+              light_grey: '#BDBDBD',
+              comment_card_background: '#f6f8fa',
+              red: '#ff0000',
           }
         }
     }
