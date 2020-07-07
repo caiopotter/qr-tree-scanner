@@ -19,12 +19,13 @@
             <span :style="{'font-weight': 'bold', 'font-size':'0.9em', 'color': 'var(--v-' + statusColor + '-base)'}">{{statusMessage}}</span>
         </v-col>
         <v-col cols="12">
-            <span style="font-weight: bold; font-size:1.1em">{{treeComments.length}} Comentários</span>
+            <span style="font-weight: bold; font-size:1.1em">{{treeComments.length}} {{commentNounNumber}}</span>
         </v-col>
         <v-col cols="12" v-for="(comment, index) in treeComments" :key="index">
             <v-card outlined>
                 <v-card-text :style="{'background-color': 'var(--v-' + 'comment_card_background' + '-base)', 'border-bottom': '1px solid #d1d5da'}">
-                    <span style="font-size:1.0em; font-weight:bold">{{comment.user.name}} comentou:</span>
+                    <span style="font-size:1.0em; font-weight:bold">{{comment.user.name}} comentou:</span><br>
+                    <span style="font-size:0.9em; ">{{formatDateTime(comment.created_at)}}</span>
                 </v-card-text>
                 <v-card-text>{{comment.text}}</v-card-text>
             </v-card>
@@ -46,10 +47,20 @@ export default {
     computed: {
         loading(){
             return this.$store.getters.loading;
+        },
+        commentNounNumber(){
+            if(this.treeComments.length == 1){
+                return 'Comentário';
+            }else{
+                return 'Comentários';
+            }
         }
     },
 
     methods: {
+        formatDateTime(dateTime){
+            return moment(dateTime).format("DD/MM/YYYY HH:mm:ss");
+        },
         getTreeComments(){
             this.$store.dispatch('getTreeComments', this.selectedTree.id).then(response => {
                 this.treeComments = response.data;
