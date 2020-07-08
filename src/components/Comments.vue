@@ -2,7 +2,7 @@
     <v-row>
         <v-col cols="12">
             <v-textarea
-            :disabled="loading"
+            :disabled="(loading || $store.getters.isVisitor)"
             v-model="commentField"
             auto-grow
             clearable
@@ -10,7 +10,7 @@
             outlined
             color="green"
             rows="2"
-            placeholder="Escreva um comentário"></v-textarea>
+            :placeholder="verifyUserLoggedIn()"></v-textarea>
         </v-col>
         <v-col class="text-right mt-n12" cols="12">
             <v-btn outlined :loading="loading" @click="sendComment" :disabled="!commentField" color="green" class="text-capitalize">Enviar<v-icon class="ml-1" small>mdi-send</v-icon></v-btn>
@@ -26,9 +26,74 @@
                 <v-card-text :style="{'background-color': 'var(--v-' + 'comment_card_background' + '-base)', 'border-bottom': '1px solid #d1d5da'}">
                     <span style="font-size:1.0em; font-weight:bold">{{comment.user.name}} comentou:</span><br>
                     <span style="font-size:0.9em; ">{{formatDateTime(comment.created_at)}}</span>
+                    <v-menu bottom left>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn class="options-icon"
+                            icon
+                            v-bind="attrs"
+                            v-on="on"
+                            >
+                            <v-icon>mdi-dots-vertical</v-icon>
+                            </v-btn>
+                        </template>
+            
+                        <v-list>
+                            <v-list-item
+                            v-for="(item, index) in actions"
+                            :key="index"
+                            @click="goToAction(item, comment)">
+                                <v-list-item-icon>
+                                    <v-icon v-text="item.icon"></v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-title>{{ item.title }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                    
                 </v-card-text>
                 <v-card-text>{{comment.text}}</v-card-text>
             </v-card>
+        </v-col>
+        <v-col>
+            <v-dialog v-model="deleteCommentDialog" max-width="500px">
+                <v-card style="overflow: hidden">
+                    <v-card-title class="mt-n1" :style="{'background-color': 'var(--v-' + 'forest' + '-base)'}">
+                        <span style="color:white">
+                            Deletar
+                        </span>
+                        <v-spacer></v-spacer>
+                        <v-icon @click="deleteCommentDialog = false" style="color:white">mdi-close</v-icon>
+                    </v-card-title>
+                    <v-card-actions>
+                        <v-row class="text-center">
+                        <v-col cols="12">
+                            <span style="color:grey; font-size:0.9em">Tem certeza que deseja deletar seu comentário? A ação não poderá ser desfeita.</span>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-btn color="forest" style="color:white"
+                            @click="deleteComment" :loading="loading">Deletar
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-btn outlined color="forest" style="color:white"
+                            @click="deleteCommentDialog = false">Cancelar
+                            </v-btn>
+                        </v-col>
+                        </v-row>
+                        
+                    </v-card-actions>
+                </v-card>
+          </v-dialog>
+        </v-col>
+        <v-col>
+            <v-bottom-sheet v-model="deleteCommentConfirmation">
+                <v-card>
+                    <v-card-title>
+                        <span style="color: var(--v-forest-base)">Sucesso!</span><v-spacer></v-spacer><v-btn color="forest" icon @click="deleteCommentConfirmation = false"><v-icon>mdi-close</v-icon></v-btn>    
+                    </v-card-title>
+                    <v-card-text>Comentário deletado com sucesso!</v-card-text>
+                </v-card>
+            </v-bottom-sheet>
         </v-col>
     </v-row>
 </template>
@@ -42,6 +107,10 @@ export default {
         treeComments: [],
         statusMessage: '',
         statusColor: '',
+        deleteCommentDialog: false,
+        deleteCommentConfirmation: false,
+        selectedComment: {},
+        actions: [{title: 'Deletar', action: 'delete', icon: 'mdi-delete'}]
     }),
 
     computed: {
@@ -58,6 +127,30 @@ export default {
     },
 
     methods: {
+        goToAction(item, comment){
+            this.selectedComment = comment;
+            switch (item.action){
+                case 'delete':
+                    this.deleteCommentDialog = true;
+                    break;
+            }
+        },
+        deleteComment(){
+            this.deleteCommentDialog = false;
+            this.$store.dispatch('deleteUserComment', this.selectedComment.id).then(response =>{
+                if(response.status == 200){
+                    this.deleteCommentConfirmation = true
+                }
+                this.getTreeComments();
+            });
+        },
+        verifyUserLoggedIn(){
+            if(!this.$store.getters.isVisitor){
+                return 'Escreva um comentário'
+            }else{
+                return 'Somente usuários cadastrados podem comentar'
+            }
+        },
         formatDateTime(dateTime){
             return moment(dateTime).format("DD/MM/YYYY HH:mm:ss");
         },
@@ -97,5 +190,9 @@ export default {
 </script>
 
 <style>
-
+    .options-icon{
+        position: absolute !important;
+        right: 3%;
+        top:15%;
+    }
 </style>
