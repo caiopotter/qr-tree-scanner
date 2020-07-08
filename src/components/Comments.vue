@@ -24,9 +24,10 @@
         <v-col cols="12" v-for="(comment, index) in treeComments" :key="index">
             <v-card outlined>
                 <v-card-text :style="{'background-color': 'var(--v-' + 'comment_card_background' + '-base)', 'border-bottom': '1px solid #d1d5da'}">
-                    <span style="font-size:1.0em; font-weight:bold">{{comment.user.name}} comentou:</span><br>
+                    <span v-if="comment.user_id == loggedUser" style="font-size:1.0em; font-weight:bold">Você comentou:</span>
+                    <span v-else style="font-size:1.0em; font-weight:bold">{{comment.user.name}} comentou:</span><br>
                     <span style="font-size:0.9em; ">{{formatDateTime(comment.created_at)}}</span>
-                    <v-menu bottom left>
+                    <v-menu bottom left v-if="comment.user_id == loggedUser">
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn class="options-icon"
                             icon
@@ -123,6 +124,9 @@ export default {
             }else{
                 return 'Comentários';
             }
+        },
+        loggedUser(){
+            return this.$store.getters.user.id;
         }
     },
 
