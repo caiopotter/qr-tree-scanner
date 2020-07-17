@@ -139,8 +139,7 @@ export default {
           this.$store.dispatch('getTreesFromServer');
         });
       }else{
-        this.$store.dispatch('getTreesFromServer');
-        this.$store.commit('setUserIsVisitor', true);
+        this.$router.push('/login')
       }
     }
   },

@@ -126,7 +126,10 @@ export default {
             }
         },
         loggedUser(){
-            return this.$store.getters.user.id;
+            if(this.$store.getters.user){
+                return this.$store.getters.user.id;
+            }
+            return -1;
         }
     },
 
@@ -161,6 +164,7 @@ export default {
         getTreeComments(){
             this.$store.dispatch('getTreeComments', this.selectedTree.id).then(response => {
                 this.treeComments = response.data;
+                console.log('created', this.treeComments)
             });        
         },
         sendComment(){
