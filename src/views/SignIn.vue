@@ -16,11 +16,11 @@
       cols="12"
       class="mb-4">
         <h1 class="display-1 font-weight-bold mb-3">
-          Boas vindas ao nome do sistema aqui!
+          Boas vindas ao App Pequena Floresta!
         </h1>
 
         <p class="subheading font-weight-regular">
-          Qualquer texto introdutório aqui. Falar sobre o software ou sobre o trabalho, talvez.
+          A aplicação que tem como objetivo compartilhar informações das árvores do bosque do CEFET-RJ.
         </p>
       </v-col>
 
