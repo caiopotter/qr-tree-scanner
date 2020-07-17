@@ -5,6 +5,7 @@ import Scanner from '../views/Scanner.vue'
 import Collection from '../views/Collection.vue'
 import CollectionDetails from '../views/CollectionDetails.vue'
 import GardenMap from '../views/GardenMap.vue'
+import Tutorial from '../views/Tutorial.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     component: GardenMap,
   },
   {
+    path: '/ajuda',
+    name: 'Help',
+    component: Tutorial,
+  },
+  {
     path: '/sobre',
     name: 'About',
     // route level code-splitting
@@ -46,11 +52,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
+
   { path: '*', redirect: '/colecao' }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
