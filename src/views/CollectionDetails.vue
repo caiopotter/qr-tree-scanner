@@ -123,7 +123,9 @@ export default {
       },
   },
   mounted(){
-      
+      if(this.$store.getters.scannedTree.id == undefined){
+          this.$router.push('/colecao')
+      }
     }
 
 }
