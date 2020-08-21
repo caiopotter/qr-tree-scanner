@@ -2,10 +2,13 @@
   "name": "qr-tree-scanner",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "deploy": "aws s3 sync ./dist s3://qr-tree-scanner"
+    "deploy": "aws s3 sync ./dist s3://qr-tree-scanner-front-https"
   },
   "dependencies": {
     "axios": "^0.19.2",
