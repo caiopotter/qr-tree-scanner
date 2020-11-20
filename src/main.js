@@ -18,7 +18,7 @@ window.axios.defaults.headers.common['Accept'] = 'application/json';
 window.axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + Vue.auth.getToken();
 
-axios.defaults.baseURL = 'http://localhost:8000/';
+axios.defaults.baseURL = 'https://api.pequenafloresta.com.br/public/';
 
 //Route Guards
 router.beforeEach(

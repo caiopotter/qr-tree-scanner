@@ -87,9 +87,9 @@ export default {
     navDrawerItems: [
         { title: 'Coleção', icon: 'mdi-tree', link: '/colecao' },
         { title: 'Escanear código', icon: 'mdi-qrcode-scan', link: '/scan' },
-        { title: 'Mapa', icon: 'mdi-map', link: '/mapa' },
+        //{ title: 'Mapa', icon: 'mdi-map', link: '/mapa' },
         { title: 'Sobre', icon: 'mdi-account-group', link: '/sobre' },
-        { title: 'Ajuda', icon: 'mdi-help-box', link: '/ajuda' },
+        //{ title: 'Ajuda', icon: 'mdi-help-box', link: '/ajuda' },
         { title: 'Sair', icon: 'mdi-logout', link: '/login'},
       ],
   }),
