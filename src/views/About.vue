@@ -26,7 +26,7 @@
         <v-divider></v-divider>
         <v-card-text>
           <v-row>
-            <v-col cols="4">
+            <v-col cols="4" sm="3" md="2" lg="1">
               <v-avatar size="64px" style="border: 2px solid #1E392A">
                 <v-img :src="require('../assets/idealizadores/myrna.jpg')"></v-img>
               </v-avatar>
@@ -43,7 +43,7 @@
         <v-divider></v-divider>
         <v-card-text class="">
           <v-row>
-            <v-col cols="4">
+            <v-col cols="4" sm="3" md="2" lg="1">
               <v-avatar size="64px" style="border: 2px solid #1E392A">
                 <v-img :src="require('../assets/idealizadores/jorge.jpg')"></v-img>
               </v-avatar>
@@ -53,14 +53,14 @@
             </v-col>
             <v-col class="" cols="12">
               <span style="font-weight: bold;">Orientador do projeto</span><br>
-              <span style="font-weight: bold;">Email: <a href="mailto:profjorge@gmail.com">profjorge@gmail.com</a></span><br>
+              <span style="font-weight: bold;">Email: <a href="mailto:jlemosbio@hotmail.com">jlemosbio@hotmail.com</a></span><br>
             </v-col>
           </v-row>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-text>
           <v-row>
-            <v-col cols="4">
+            <v-col cols="4" sm="3" md="2" lg="1">
               <v-avatar size="64px" style="border: 2px solid #1E392A">
                 <v-img :src="require('../assets/idealizadores/caio.jpg')"></v-img>
               </v-avatar>
@@ -77,7 +77,7 @@
         <v-divider></v-divider>
         <v-card-text>
           <v-row>
-            <v-col cols="4">
+            <v-col cols="4" sm="3" md="2" lg="1">
               <v-avatar size="64px" style="border: 2px solid #1E392A">
                 <v-img :src="require('../assets/idealizadores/paulo.jpg')"></v-img>
               </v-avatar>

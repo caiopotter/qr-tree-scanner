@@ -7,14 +7,16 @@
             <v-col cols="12" class="mt-n6">
                 <span style="font-weight: bold; font-size: 0.9em">{{discoveredTrees.length}} de {{storedTrees}} árvores descobertas</span>
             </v-col>
-            <v-col class="mb-n6" cols="12" v-for="(tree, index) in discoveredTrees" :key="index">
+            <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(tree, index) in discoveredTrees" :key="index">
                 <tree-card :treeNumber="index+1" :tree="tree" :discovered="true" @details="details"></tree-card>
             </v-col>
-            <v-col class="mb-n6" cols="12" v-if="remainingTreesNumber > 0">
-                <tree-card v-for="(n) in remainingTreesNumber" :key="discoveredTrees.length + n -1"
-                :treeNumber="discoveredTrees.length + n" :discovered="false"></tree-card>
+            <v-col cols="12" class="mt-6" v-if="remainingTreesNumber > 0">
+                <span style="font-weight: bold; font-size: 1.3em">Árvores restantes:</span>
+                <div class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(n) in remainingTreesNumber" :key="discoveredTrees.length + n -1">
+                    <tree-card class="mb-2" :treeNumber="discoveredTrees.length + n" :discovered="false"></tree-card>
+                </div>
             </v-col>
-        </v-row>
+            </v-row>
     </v-container>
 </template>
 
