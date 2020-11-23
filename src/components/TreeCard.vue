@@ -2,15 +2,15 @@
     <v-row>
         <v-col>
             <v-card
-      class="mx-auto"
-      max-width="344"
-    >
+                class="mx-auto"
+                max-width="344"
+            >
                 <v-img v-if="!discovered"
                     :src="require('@/assets/pequenaFlorestaCinzaSemFundoIcone.png')"
                     height="200px"
                 ></v-img>
                 <v-img v-else
-                    :src="require('../assets/PequenaFlorestaSemTextoSemFundo.png')"
+                    :src="tree.url ? tree.url : require('../assets/PequenaFlorestaSemTextoSemFundo.png')"
                     height="200px"
                 ></v-img>
             

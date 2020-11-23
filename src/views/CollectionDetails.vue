@@ -2,8 +2,8 @@
     <v-card flat>
         <v-card-actions>
             <v-card flat>
-                <v-img v-if="selectedTree.img" :src="selectedTree.img"></v-img>
-                <v-img v-else :src="require('../assets/PequenaFlorestaSemTextoSemFundo.png')"></v-img>
+                <v-img v-if="selectedTree.url" :src="selectedTree.url" height="400px" contain></v-img>
+                <v-img v-else :src="require('../assets/PequenaFlorestaSemTextoSemFundo.png')" height="400px" contain></v-img>
                 <v-card-actions>
                     <v-row>
                         <v-col class="mb-n4" cols="12">
