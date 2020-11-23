@@ -12,9 +12,9 @@
             </v-col>
             <v-col cols="12" class="mt-6" v-if="remainingTreesNumber > 0">
                 <span style="font-weight: bold; font-size: 1.3em">Árvores restantes:</span>
-                <div class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(n) in remainingTreesNumber" :key="discoveredTrees.length + n -1">
-                    <tree-card class="mb-2" :treeNumber="discoveredTrees.length + n" :discovered="false"></tree-card>
-                </div>
+            </v-col>
+            <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(n) in remainingTreesNumber" :key="discoveredTrees.length + n -1">
+                <tree-card class="mb-2" :treeNumber="discoveredTrees.length + n" :discovered="false"></tree-card>
             </v-col>
             </v-row>
     </v-container>
