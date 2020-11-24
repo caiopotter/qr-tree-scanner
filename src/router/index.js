@@ -58,7 +58,10 @@ const routes = [
 
 const router = new VueRouter({
   base: process.env.BASE_URL,
-  routes
+  routes,
+  scrollBehavior () {
+    return { x: 0, y: 0 }
+  }
 })
 
 export default router
