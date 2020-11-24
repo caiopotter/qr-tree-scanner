@@ -2,6 +2,7 @@
   <v-app >
     <v-navigation-drawer
     v-model="menu"
+    disable-resize-watcher
     app
     color="light">
       <v-list 
@@ -26,6 +27,7 @@
             v-for="item in navDrawerItems"
             :key="item.title"
             link
+            @click="goTo(item)"
           >
             <v-list-item-icon>
               <v-icon v-if="$route.path.includes(item.link)" style="color:green">{{ item.icon }}</v-icon>
@@ -33,8 +35,8 @@
             </v-list-item-icon>
   
             <v-list-item-content>
-              <v-list-item-title v-if="$route.path.includes(item.link)" style="color:green" nav @click="goTo(item)">{{ item.title }}</v-list-item-title>
-              <v-list-item-title v-else nav @click="goTo(item)">{{ item.title }}</v-list-item-title>
+              <v-list-item-title v-if="$route.path.includes(item.link)" style="color:green" nav>{{ item.title }}</v-list-item-title>
+              <v-list-item-title v-else nav>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -115,7 +117,7 @@ export default {
     goTo(item){
       if(item.title == "Sair"){
         this.logout(item);
-      }else{
+      }else if(this.$route.path !== item.link){
         this.$router.push(item.link)
       }
     },
@@ -131,7 +133,7 @@ export default {
           this.$router.push(item.link);
         });
       }
-
+      this.menu = false;
     },
     async getUserInfoFromServer(){
       if(this.isUserLoggedIn){
