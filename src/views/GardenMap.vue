@@ -1,85 +1,65 @@
 <template>
-  <v-container>
-      
-        <v-card max-height="400">
-          <v-card-title><span>Titulo</span></v-card-title>
-          <v-card-actions>
-            <v-row>
-            <v-col class="img-wrapper">
-              <img src="../assets/mapaBosque.jpeg" usemap="#usemap">
+  <v-container class="map-auto-fill">
+      <l-map
+        :preferCanvas="true"
+        :zoom="zoom"
+        :minZoom="18"
+        :maxZoom="19"
+        :center="center"
+        @update:zoom="zoomUpdated"
+        @update:center="centerUpdated"
+        @update:bounds="boundsUpdated"
+      >
+      <l-tile-layer :options="{ maxZoom: 19, preferCanvas:true }" :url="url"></l-tile-layer>
+    </l-map>
 
-              <map name="usemap">
-                <area @click="showMapBottomSheet('Árvore 1')" target="" alt="Arvore 1" title="Arvore 1" href="#" coords="567,838,13" shape="circle">
-                <area @click="showMapBottomSheet('Árvore 2')" target="" alt="Arvore 2" title="Arvore 2" href="#" coords="719,1009,11" shape="circle">
-                <area @click="showMapBottomSheet('Árvore 3')" target="" alt="Arvore 3" title="Arvore 3" href="#" coords="777,750,11" shape="circle">
-                <area @click="showMapBottomSheet('Árvore 4')" target="" alt="Arvore 4" title="Arvore 4" href="#" coords="689,448,10" shape="circle">
-              </map>
-            </v-col>
-            </v-row>
-          </v-card-actions>
-        </v-card>
-      
-        <v-bottom-sheet v-model="mapBottomSheet">
-          <v-card>
-            <v-card-title>
-                <v-row>
-                    <v-col cols="11" class="text-center ml-2" :style="{'color': 'var(--v-forest-base)', 'font-weight':'bold'}">
-                        {{bottomSheetText}}
-                    </v-col>
-                    <v-col cols="1" style="position: absolute; right: 15%;">
-                        <v-btn text @click="mapBottomSheet = false">
-                            <v-icon style="color: red">mdi-close</v-icon>
-                        </v-btn>
-                    </v-col>
-                </v-row>
-            </v-card-title>
-            <v-card-subtitle>
-                <v-flex xs12 class=" mt-2" :style="{'font-weight':'bold', 'color': 'grey'}">
-                    Texto de exemplo
-                </v-flex>
-            </v-card-subtitle>
-          </v-card>
-        </v-bottom-sheet>
-        
   </v-container>
 </template>
 
 <script>
-import imageMap from "image-map";
+import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader';
+import L from 'leaflet';
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+
 export default {
-    name: "GardenMap",
-    data: () => ({
-      mapBottomSheet: false,
-      bottomSheetText: '',
-    }),
+  name: 'GardenMap',
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker,
+  },
+  data: () => ({
+    url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+    zoom: 18,
+    center: [-22.912068, -43.224742],
+    bounds: undefined
+  }),
 
-    computed: {
+  methods: {
+    zoomUpdated (zoom) {
+      this.zoom = zoom;
     },
+    centerUpdated (center) {
+      this.center = center;
+    },
+    boundsUpdated (bounds) {
+      this.bounds = bounds;
+    },
+    doSomethingOnReady(){
+      console.log('pronto')
+      this.map = this.$refs.myMap.mapObject
+    },
+  }
 
-    methods: {
-      showMapBottomSheet(text){
-        this.bottomSheetText = text;
-        this.mapBottomSheet = true;
-      }
-    },
-    mounted(){
-      imageMap('img[usemap]')
-    }
 }
 </script>
-
 <style>
-.img-wrapper {
-    overflow: auto;
-    position: inherit;
-    top: 0%;
-    left: 0%;
-}
-
-.img-wrapper > img {
-    height: 150%;
-    width: 150%;
-    
-}
-
+    .map-auto-fill{
+        width: 100vw;
+        overflow: hidden;
+        padding: 0px !important;
+        margin:-12px;
+        height: 100vh;
+        position: fixed;
+    }
 </style>
