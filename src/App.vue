@@ -36,7 +36,7 @@
             <v-list-item-content>
               <v-list-item-title v-if="$route.path.includes('/parques')" style="color:green" nav>Parque Atual</v-list-item-title>
               <v-list-item-title v-else nav>Parque Atual</v-list-item-title>
-              <v-list-item-subtitle>Bosque do Cefet-RJ</v-list-item-subtitle>
+              <v-list-item-subtitle>{{selectedPark.name}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
 
@@ -101,6 +101,13 @@ export default {
     this.$store.dispatch('checkAuthState');
     this.getUserInfoFromServer();
   },
+  mounted(){
+    this.$store.dispatch('getParksFromServer').then(response => {
+      if(response.data.length > 0){
+        this.$store.commit('setSelectedPark', response.data[0]);
+      }
+    });
+  },
   data: () => ({
     menu: false,
     navDrawerItems: [
@@ -127,6 +134,9 @@ export default {
         return this.$store.getters.user.name
       }
       return 'Visitante';
+    },
+    selectedPark(){
+      return this.$store.getters.selectedPark
     }
 
   },

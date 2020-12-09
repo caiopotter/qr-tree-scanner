@@ -4,6 +4,7 @@ import Auth from '@/store/modules/Auth'
 import User from '@/store/modules/User'
 import Tree from '@/store/modules/Tree'
 import Comment from '@/store/modules/Comment'
+import Park from '@/store/modules/Park'
 
 Vue.use(Vuex)
 
@@ -26,7 +27,8 @@ export default new Vuex.Store({
     Auth,
     User,
     Tree,
-    Comment
+    Comment,
+    Park
   },
   getters: {
     menuTitle(state){
