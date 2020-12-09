@@ -10,24 +10,41 @@
           nav
         >
           <v-list-item two-line>
-                <v-list-item-avatar size="50px">
-                  <v-img :src="require('./assets/PequenaFlorestaSemTexto.png')"
-                  contain
-                  />
-                </v-list-item-avatar>
-    
-                <v-list-item-content>
-                  <v-list-item-title>Pequena Floresta</v-list-item-title>
-                  <v-list-item-subtitle>{{userName}}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
+            <v-list-item-avatar size="50px">
+              <v-img :src="require('./assets/PequenaFlorestaSemTexto.png')"
+              contain
+              />
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title>Pequena Floresta</v-list-item-title>
+              <v-list-item-subtitle>{{userName}}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider class="mb-2"></v-divider>
+
+          <v-list-item
+            link
+            @click="goTo('parques', '/parques')"
+          >
+            <v-list-item-icon>
+              <v-icon v-if="$route.path.includes('/parques')" style="color:green">mdi-map-marker</v-icon>
+              <v-icon v-else>mdi-map-marker</v-icon>
+            </v-list-item-icon>
   
-            <v-divider class="mb-2"></v-divider>
+            <v-list-item-content>
+              <v-list-item-title v-if="$route.path.includes('/parques')" style="color:green" nav>Parque Atual</v-list-item-title>
+              <v-list-item-title v-else nav>Parque Atual</v-list-item-title>
+              <v-list-item-subtitle>Bosque do Cefet-RJ</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+
           <v-list-item
             v-for="item in navDrawerItems"
             :key="item.title"
             link
-            @click="goTo(item)"
+            @click="goTo(item.title, item.link)"
           >
             <v-list-item-icon>
               <v-icon v-if="$route.path.includes(item.link)" style="color:green">{{ item.icon }}</v-icon>
@@ -114,23 +131,23 @@ export default {
 
   },
   methods:{
-    goTo(item){
-      if(item.title == "Sair"){
-        this.logout(item);
-      }else if(this.$route.path !== item.link){
-        this.$router.push(item.link)
+    goTo(title, link){
+      if(title == "Sair"){
+        this.logout();
+      }else if(this.$route.path !== link){
+        this.$router.push(link)
       }
     },
-    logout(item){
+    logout(){
       if(this.$store.getters.isVisitor){
         this.$store.commit('setUserIsVisitor', false);
         this.$store.commit('clearUserDiscoveredTrees');
-        this.$router.push(item.link);
+        this.$router.push('/login');
       }else{
         this.$store.dispatch('logout').then(() => {
           this.$store.commit('clearUserDiscoveredTrees');
           this.$store.commit('SET_LOGGEDIN_USER', {user: null});
-          this.$router.push(item.link);
+          this.$router.push('/login');
         });
       }
       this.menu = false;
