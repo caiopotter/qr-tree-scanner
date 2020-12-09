@@ -11,6 +11,7 @@
         @update:bounds="boundsUpdated"
       >
       <l-tile-layer :options="{ maxZoom: 19, preferCanvas:true }" :url="url"></l-tile-layer>
+      <l-geo-json :geojson="geoJson"></l-geo-json>
     </l-map>
 
   </v-container>
@@ -19,7 +20,7 @@
 <script>
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader';
 import L from 'leaflet';
-import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+import { LMap, LTileLayer, LMarker, LGeoJson } from 'vue2-leaflet';
 
 export default {
   name: 'GardenMap',
@@ -27,12 +28,26 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
+    LGeoJson
   },
   data: () => ({
     url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
     zoom: 18,
     center: [-22.912068, -43.224742],
-    bounds: undefined
+    bounds: undefined,
+    geoJson: {
+                "type": "Feature",
+                "properties": {
+                  "name": "Dinagat Islands"
+                },
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [
+                    -43.22452448308468,
+                    -22.91199240669688
+                  ]
+                }
+              }
   }),
 
   methods: {
