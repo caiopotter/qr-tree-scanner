@@ -11,7 +11,9 @@
         @update:bounds="boundsUpdated"
       >
       <l-tile-layer :options="{ maxZoom: 19, preferCanvas:true }" :url="url"></l-tile-layer>
-      <l-geo-json :geojson="geoJson"></l-geo-json>
+      <l-circle-marker v-for="(tree, index) in parkTrees" :key="index" :lat-lng="formatCoordinates(tree)" :radius="5" :color="'green'">
+        <l-popup>{{tree.common_name}}</l-popup>
+      </l-circle-marker>
     </l-map>
 
   </v-container>
@@ -20,7 +22,7 @@
 <script>
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader';
 import L from 'leaflet';
-import { LMap, LTileLayer, LMarker, LGeoJson } from 'vue2-leaflet';
+import { LMap, LTileLayer, LMarker, LGeoJson, LCircleMarker, LPopup } from 'vue2-leaflet';
 
 export default {
   name: 'GardenMap',
@@ -28,29 +30,33 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LGeoJson
+    LGeoJson,
+    LCircleMarker,
+    LPopup
+  },
+  computed:{
+    parkTrees(){
+      return this.$store.getters.selectedParkTrees
+    },
   },
   data: () => ({
     url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
     zoom: 18,
     center: [-22.912068, -43.224742],
     bounds: undefined,
-    geoJson: {
-                "type": "Feature",
-                "properties": {
-                  "name": "Dinagat Islands"
-                },
-                "geometry": {
-                  "type": "Point",
-                  "coordinates": [
-                    -43.22452448308468,
-                    -22.91199240669688
-                  ]
-                }
-              }
   }),
 
   methods: {
+    formatCoordinates(tree){
+      let latlgn = [];
+      if(tree && tree.pivot && tree.pivot.map_latitude && tree.pivot.map_longitude){
+        latlgn.push(tree.pivot.map_latitude)
+        latlgn.push(tree.pivot.map_longitude)
+      }else{
+        latlgn = ['0', '0']
+      }
+      return latlgn;
+    },
     zoomUpdated (zoom) {
       this.zoom = zoom;
     },
