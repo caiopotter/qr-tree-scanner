@@ -4,6 +4,7 @@ import ParkApi from '../../api/ParkApi'
 const state= {
     parks: [],
     selectedPark: {},
+    selectedParkTrees: {}
 }
 
 const getters= {
@@ -12,6 +13,9 @@ const getters= {
     },
     selectedPark(state){
         return state.selectedPark;
+    },
+    selectedParkTrees(state){
+        return state.selectedParkTrees;
     }
 }
 
@@ -21,6 +25,9 @@ const mutations= {
     },
     setParks(state, payload){
         state.parks = payload.parks;
+    },
+    setSelectedParkTrees(state, payload){
+        state.selectedParkTrees = payload.trees;
     }
 }
 
@@ -37,6 +44,24 @@ const actions= {
         Api.isWaitingResponse(context, false);
 
         return storedParks;
+
+        }catch(error){
+            console.log(error);
+            return error
+        }
+  },
+  async getParkTreesFromServer(context, parkId){
+    try{
+        Api.isWaitingResponse(context, true);
+
+        const storedParkTrees = await ParkApi.getParkTrees(parkId);
+        context.commit('setSelectedParkTrees', {
+            trees: storedParkTrees.data
+        });
+
+        Api.isWaitingResponse(context, false);
+
+        return storedParkTrees;
 
         }catch(error){
             console.log(error);
