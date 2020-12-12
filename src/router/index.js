@@ -6,6 +6,7 @@ import Collection from '../views/Collection.vue'
 import CollectionDetails from '../views/CollectionDetails.vue'
 import GardenMap from '../views/GardenMap.vue'
 import Tutorial from '../views/Tutorial.vue'
+import ParkList from '../views/ParkList.vue'
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,11 @@ const routes = [
     path: '/ajuda',
     name: 'Help',
     component: Tutorial,
+  },
+  {
+    path: '/parques',
+    name: 'ParkList',
+    component: ParkList
   },
   {
     path: '/sobre',
