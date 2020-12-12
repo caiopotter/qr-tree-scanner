@@ -67,7 +67,6 @@ export default {
       this.bounds = bounds;
     },
     doSomethingOnReady(){
-      console.log('pronto')
       this.map = this.$refs.myMap.mapObject
     },
   }
