@@ -7,7 +7,9 @@
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(park, index) in storedParks" :key="index">
                 <park-card :park="park" :selectedPark="selectedPark"></park-card>
             </v-col>
-            
+            <v-col cols="12">
+                <v-card style="position: fixed; bottom: 1%;"><v-btn class="align-right">Selecionar</v-btn></v-card>
+            </v-col>
             </v-row>
     </v-container>
 </template>
