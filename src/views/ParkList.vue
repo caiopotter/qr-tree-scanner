@@ -8,7 +8,7 @@
                 <park-card :park="park" :selectedPark="selectedPark"></park-card>
             </v-col>
             <v-col cols="12">
-                <v-card style="position: fixed; bottom: 1%;"><v-btn class="align-right">Selecionar</v-btn></v-card>
+                <v-card style="position: fixed; bottom: 1%;"><v-btn class="">Selecionar</v-btn></v-card>
             </v-col>
             </v-row>
     </v-container>
