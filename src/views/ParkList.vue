@@ -5,12 +5,12 @@
                 <span style="font-weight: bold; font-size: 1.3em">Clique em um cartão para selecionar um parque da lista:</span>
             </v-col>
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(park, index) in storedParks" :key="index">
-                <park-card :park="park" :selectedPark="selectedPark"></park-card>
+                <park-card @preSelectPark="preSelectPark" :selectedParkOnViewOpen="selectedParkOnViewOpen" :park="park" :selectedPark="selectedPark"></park-card>
             </v-col>
             <v-col class="mt-6" cols="12">
-                <v-card color="grey" class="align-right" style="position: fixed; width: 100%; left:0%; bottom: 0%;">
+                <v-card class="align-right" style="background-color:lightgray; position: fixed; width: 100%; left:0%; bottom: 0%;">
                     <v-card-actions>
-                        <v-btn color="forest" style="color:white;">Selecionar</v-btn>
+                        <v-btn :disabled="this.$store.getters.selectedPark == this.selectedParkOnViewOpen" color="forest" style="color:white;">Selecionar</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -27,7 +27,12 @@ export default {
       ParkCard
   },
   data: () => ({
+      selectedParkOnViewOpen: {}
   }),
+
+  mounted(){
+      this.selectedParkOnViewOpen = this.$store.getters.selectedPark;
+  },
 
   computed: {
       storedParks(){
@@ -39,7 +44,12 @@ export default {
   },
 
   methods: {
-      
+      preSelectPark(clickedPark){
+          if(this.$store.getters.selectedPark.id != clickedPark.id){
+              this.$store.commit('setSelectedPark', clickedPark)
+          }
+      },
+
   }
 
 }

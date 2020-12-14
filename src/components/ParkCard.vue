@@ -15,7 +15,7 @@
             </v-card>    
         </v-dialog>
         <v-row>
-            <v-card @click="test" outlined :style="park.id == selectedPark.id ? 'border: 1px solid green' : 'border: 1px solid lightgray' "> 
+            <v-card @click="preSelectPark" outlined :style="park.id == selectedPark.id ? 'border: 1px solid green' : 'border: 1px solid lightgray' "> 
                 <v-row no-gutters>
                     <v-col cols="11">
                 <v-card-title style="font-size:1.1em">{{park.name}}</v-card-title>
@@ -43,8 +43,8 @@ export default {
     },
 
     methods: {
-        test(event){
-            console.log(event)
+        preSelectPark(){
+            this.$emit('preSelectPark', this.park);
         },
         showAboutParkDialog(){
             this.aboutParkDialog = true;
