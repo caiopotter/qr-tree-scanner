@@ -25,7 +25,7 @@
                 <v-btn @click="showAboutParkDialog" style="position:absolute; right:3%; top:9%" icon>
                     <v-icon color="forest">mdi-help-circle</v-icon>
                 </v-btn>
-                <v-card-text v-if="selectedPark.id == park.id" style="position:absolute; bottom:0%; right:3%; padding:0px; text-align:right">selecionado</v-card-text>
+                <v-card-text v-if="selectedParkOnViewOpen.id == park.id" style="position:absolute; bottom:0%; right:3%; padding:0px; text-align:right">selecionado</v-card-text>
             </v-card>
         </v-row>
     </v-container>
@@ -39,7 +39,10 @@ export default {
         aboutParkDialog: false
     }),
 
-    computed: {
+    computed:{
+        selectedParkOnViewOpen(){
+            return this.$store.getters.selectedParkOnViewOpen;
+        }
     },
 
     methods: {

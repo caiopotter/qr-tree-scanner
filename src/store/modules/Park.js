@@ -4,7 +4,8 @@ import ParkApi from '../../api/ParkApi'
 const state= {
     parks: [],
     selectedPark: {},
-    selectedParkTrees: {}
+    selectedParkTrees: {},
+    selectedParkOnViewOpen: {}
 }
 
 const getters= {
@@ -16,6 +17,9 @@ const getters= {
     },
     selectedParkTrees(state){
         return state.selectedParkTrees;
+    },
+    selectedParkOnViewOpen(state){
+        return state.selectedParkOnViewOpen;
     }
 }
 
@@ -28,6 +32,9 @@ const mutations= {
     },
     setSelectedParkTrees(state, payload){
         state.selectedParkTrees = payload.trees;
+    },
+    setSelectedParkOnViewOpen(state, payload){
+        state.selectedParkOnViewOpen = payload
     }
 }
 
