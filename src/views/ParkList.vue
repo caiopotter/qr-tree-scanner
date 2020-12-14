@@ -7,8 +7,12 @@
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(park, index) in storedParks" :key="index">
                 <park-card :park="park" :selectedPark="selectedPark"></park-card>
             </v-col>
-            <v-col cols="12">
-                <v-card style="position: fixed; bottom: 1%;"><v-btn class="">Selecionar</v-btn></v-card>
+            <v-col class="mt-6" cols="12">
+                <v-card color="grey" class="align-right" style="position: fixed; width: 100%; left:0%; bottom: 0%;">
+                    <v-card-actions>
+                        <v-btn color="forest" style="color:white;">Selecionar</v-btn>
+                    </v-card-actions>
+                </v-card>
             </v-col>
             </v-row>
     </v-container>
