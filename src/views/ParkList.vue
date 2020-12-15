@@ -8,9 +8,9 @@
                 <park-card @setPreSelectPark="setPreSelectPark" :park="park"></park-card>
             </v-col>
             <v-col class="mt-6" cols="12">
-                <v-card class="align-right" style="background-color:lightgray; position: fixed; width: 100%; left:0%; bottom: 0%;">
+                <v-card class="align-right" style="background-color:lightgray; position: fixed; height: 50px; width: 100%; left:0%; bottom: 0%;">
                     <v-card-actions>
-                        <v-btn :disabled="this.$store.getters.selectedPark.id == preSelectedPark.id" color="forest" style="color:white;">Selecionar</v-btn>
+                        <v-btn @click="selectNewPark" :disabled="this.$store.getters.selectedPark.id == preSelectedPark.id" color="forest" style="position: absolute; bottom: 10%; right: 5%; color:white;">Selecionar</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -45,6 +45,10 @@ export default {
         setPreSelectPark(clickedPark){
             this.$store.commit('setPreSelectedPark', clickedPark);
         },
+        selectNewPark(){
+            this.$store.commit('setSelectedPark', this.$store.getters.preSelectedPark)
+            this.$router.push('/colecao')
+        }
 
     }
 
