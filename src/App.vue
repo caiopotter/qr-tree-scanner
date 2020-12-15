@@ -105,7 +105,7 @@ export default {
     this.$store.dispatch('getParksFromServer').then(response => {
       if(response.data.length > 0){
         this.$store.commit('setSelectedPark', response.data[0]);
-        this.$store.commit('setSelectedParkOnViewOpen', response.data[0]);
+        this.$store.commit('setPreSelectedPark', response.data[0]);
         this.$store.dispatch('getParkTreesFromServer', response.data[0].id);
       }
     });

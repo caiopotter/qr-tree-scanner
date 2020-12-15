@@ -15,7 +15,7 @@
             </v-card>    
         </v-dialog>
         <v-row>
-            <v-card @click="preSelectPark" outlined :style="park.id == selectedPark.id ? 'border: 1px solid green' : 'border: 1px solid lightgray' "> 
+            <v-card @click="setPreSelectPark" outlined :style="park.id == preSelectedPark.id ? 'border: 1px solid green' : 'border: 1px solid lightgray' "> 
                 <v-row no-gutters>
                     <v-col cols="11">
                 <v-card-title style="font-size:1.1em">{{park.name}}</v-card-title>
@@ -25,7 +25,7 @@
                 <v-btn @click="showAboutParkDialog" style="position:absolute; right:3%; top:9%" icon>
                     <v-icon color="forest">mdi-help-circle</v-icon>
                 </v-btn>
-                <v-card-text v-if="selectedParkOnViewOpen.id == park.id" style="position:absolute; bottom:0%; right:3%; padding:0px; text-align:right">selecionado</v-card-text>
+                <v-card-text v-if="selectedPark.id == park.id" style="position:absolute; bottom:0%; right:3%; padding:0px; text-align:right">selecionado</v-card-text>
             </v-card>
         </v-row>
     </v-container>
@@ -34,20 +34,23 @@
 <script>
 export default {
     name: "ParkCard",
-    props:['park', 'selectedPark'],
+    props:['park'],
     data: () => ({
         aboutParkDialog: false
     }),
 
     computed:{
-        selectedParkOnViewOpen(){
-            return this.$store.getters.selectedParkOnViewOpen;
+        preSelectedPark(){
+            return this.$store.getters.preSelectedPark;
+        },
+        selectedPark(){
+            return this.$store.getters.selectedPark;
         }
     },
 
     methods: {
-        preSelectPark(){
-            this.$emit('preSelectPark', this.park);
+        setPreSelectPark(){
+            this.$emit('setPreSelectPark', this.park);
         },
         showAboutParkDialog(){
             this.aboutParkDialog = true;
