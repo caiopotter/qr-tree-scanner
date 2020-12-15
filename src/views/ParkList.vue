@@ -46,7 +46,9 @@ export default {
             this.$store.commit('setPreSelectedPark', clickedPark);
         },
         selectNewPark(){
-            this.$store.commit('setSelectedPark', this.$store.getters.preSelectedPark)
+            let newPark = this.$store.getters.preSelectedPark
+            this.$store.commit('setSelectedPark', newPark)
+            this.$store.dispatch('getParkTreesFromServer', newPark.id)
             this.$router.push('/colecao')
         }
 

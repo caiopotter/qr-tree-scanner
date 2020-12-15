@@ -3,9 +3,9 @@
       <l-map
         :preferCanvas="true"
         :zoom="zoom"
-        :minZoom="18"
+        :minZoom="16"
         :maxZoom="19"
-        :center="center"
+        :center="formatMapCenterCoordinates"
         @update:zoom="zoomUpdated"
         @update:center="centerUpdated"
         @update:bounds="boundsUpdated"
@@ -38,24 +38,36 @@ export default {
     parkTrees(){
       return this.$store.getters.selectedParkTrees
     },
+    selectedPark(){
+      return this.$store.getters.selectedPark;
+    },
+    formatMapCenterCoordinates(){
+      let park = this.$store.getters.selectedPark;
+      let coords = [];
+      if((!park.map_center_latitude) || (!park.map_center_longitude)){
+        return [-22.912068, -43.224742]
+      }
+        coords.push(park.map_center_latitude);
+        coords.push(park.map_center_longitude);
+        return coords;
+    }
   },
   data: () => ({
     url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-    zoom: 18,
-    center: [-22.912068, -43.224742],
+    zoom: 17,
     bounds: undefined,
   }),
 
   methods: {
     formatCoordinates(tree){
-      let latlgn = [];
+      let latlng = [];
       if(tree && tree.pivot && tree.pivot.map_latitude && tree.pivot.map_longitude){
-        latlgn.push(tree.pivot.map_latitude)
-        latlgn.push(tree.pivot.map_longitude)
+        latlng.push(tree.pivot.map_latitude)
+        latlng.push(tree.pivot.map_longitude)
       }else{
-        latlgn = ['0', '0']
+        latlng = ['0', '0']
       }
-      return latlgn;
+      return latlng;
     },
     zoomUpdated (zoom) {
       this.zoom = zoom;
