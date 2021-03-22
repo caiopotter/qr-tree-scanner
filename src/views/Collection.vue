@@ -2,10 +2,14 @@
   <v-container>
         <v-row v-if="isSpecificPark">
             <v-col cols="12">
-                <span style="font-weight: bold; font-size: 1.3em">Sua coleção:</span>
+                <span style="font-weight: bold; font-size: 1.3em">Parque selecionado:</span>
             </v-col>
-            <v-col cols="12" class="mt-n6">
-                <span v-if="isSpecificPark" style="font-weight: bold; font-size: 0.9em">{{userDiscoveredTreesByPark.length}} de {{parkTrees.length}} árvores descobertas</span>
+            <v-col class="mt-n6" cols="12">
+                <span style="font-weight: bold; font-size: 0.9em">{{selectedParkName}}</span>
+            </v-col>
+            <v-col cols="12" class="mt-n2">
+                <v-progress-circular v-if="!Number.isSafeInteger(storedTrees)" indeterminate color=forest></v-progress-circular>
+                <span v-else style="font-weight: bold; font-size: 0.9em">{{userDiscoveredTreesByPark.length}} de {{parkTrees.length}} árvores descobertas</span>
             </v-col>
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(tree, index) in userDiscoveredTreesByPark" :key="index">
                 <tree-card :treeNumber="index+1" :tree="tree" :discovered="true" @details="details"></tree-card>
@@ -22,7 +26,8 @@
                 <span style="font-weight: bold; font-size: 1.3em">Sua coleção:</span>
             </v-col>
             <v-col cols="12" class="mt-n6">
-                <span style="font-weight: bold; font-size: 0.9em">{{discoveredTrees.length}} de {{storedTrees}} árvores descobertas</span>
+                <v-progress-circular v-if="!Number.isSafeInteger(storedTrees)" indeterminate color=forest></v-progress-circular>
+                <span v-else style="font-weight: bold; font-size: 0.9em">{{discoveredTrees.length}} de {{storedTrees}} árvores descobertas</span>
             </v-col>
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(tree, index) in discoveredTrees" :key="index">
                 <tree-card :treeNumber="index+1" :tree="tree" :discovered="true" @details="details"></tree-card>
@@ -76,6 +81,11 @@ export default {
               return true
           }
           return false;
+      },
+      selectedParkName(){
+          if(this.$store.getters.selectedPark.id != undefined){
+              return this.$store.getters.selectedPark.name
+          }
       }
   },
 
