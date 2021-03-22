@@ -4,8 +4,11 @@
             <v-col cols="12">
                 <span style="font-weight: bold; font-size: 1.3em">Clique em um cartão para selecionar um parque da lista:</span>
             </v-col>
+            <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3">
+                <park-card @setPreSelectPark="setPreSelectPark" :park="{id:undefined, name:'Sem parque', address:'Visualizar os dados de todos os locais'}" :hasHelp="false"></park-card>
+            </v-col>
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(park, index) in storedParks" :key="index">
-                <park-card @setPreSelectPark="setPreSelectPark" :park="park"></park-card>
+                <park-card @setPreSelectPark="setPreSelectPark" :park="park" :hasHelp="true"></park-card>
             </v-col>
             <v-col class="mt-6" cols="12">
                 <v-card class="align-right" style="background-color:lightgray; position: fixed; height: 50px; width: 100%; left:0%; bottom: 0%;">
@@ -46,10 +49,15 @@ export default {
             this.$store.commit('setPreSelectedPark', clickedPark);
         },
         selectNewPark(){
-            let newPark = this.$store.getters.preSelectedPark
+            let newPark = this.preSelectedPark
             this.$store.commit('setSelectedPark', newPark)
-            this.$store.dispatch('getParkTreesFromServer', newPark.id)
-            this.$router.push('/colecao')
+            if(newPark.id != undefined){
+                this.$store.dispatch('getParkTreesFromServer', newPark.id).then(res => {
+                    this.$router.push('/colecao')
+                })
+            }else{
+                this.$router.push('/colecao')
+            }
         }
 
     }

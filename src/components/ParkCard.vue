@@ -22,7 +22,7 @@
                     </v-col>
                 <v-card-subtitle>{{park.address}}</v-card-subtitle>
                 </v-row>
-                <v-btn @click="showAboutParkDialog" style="position:absolute; right:3%; top:9%" icon>
+                <v-btn v-if="hasHelp" @click="showAboutParkDialog" style="position:absolute; right:3%; top:9%" icon>
                     <v-icon color="forest">mdi-help-circle</v-icon>
                 </v-btn>
                 <v-card-text v-if="selectedPark.id == park.id" style="position:absolute; bottom:0%; right:3%; padding:0px; text-align:right">selecionado</v-card-text>
@@ -34,7 +34,7 @@
 <script>
 export default {
     name: "ParkCard",
-    props:['park'],
+    props:['park', 'hasHelp'],
     data: () => ({
         aboutParkDialog: false
     }),

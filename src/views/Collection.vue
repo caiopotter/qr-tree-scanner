@@ -1,6 +1,23 @@
 <template>
   <v-container>
-        <v-row>
+        <v-row v-if="isSpecificPark">
+            <v-col cols="12">
+                <span style="font-weight: bold; font-size: 1.3em">Sua coleção:</span>
+            </v-col>
+            <v-col cols="12" class="mt-n6">
+                <span v-if="isSpecificPark" style="font-weight: bold; font-size: 0.9em">{{userDiscoveredTreesByPark.length}} de {{parkTrees.length}} árvores descobertas</span>
+            </v-col>
+            <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(tree, index) in userDiscoveredTreesByPark" :key="index">
+                <tree-card :treeNumber="index+1" :tree="tree" :discovered="true" @details="details"></tree-card>
+            </v-col>
+            <v-col cols="12" class="mt-6" v-if="userRemainingTreesByPark > 0">
+                <span style="font-weight: bold; font-size: 1.3em">Árvores restantes:</span>
+            </v-col>
+            <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(n) in userRemainingTreesByPark" :key="userDiscoveredTreesByPark.length + n -1">
+                <tree-card class="mb-2" :treeNumber="userDiscoveredTreesByPark.length + n" :discovered="false"></tree-card>
+            </v-col>
+        </v-row>
+        <v-row v-else>
             <v-col cols="12">
                 <span style="font-weight: bold; font-size: 1.3em">Sua coleção:</span>
             </v-col>
@@ -16,7 +33,7 @@
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(n) in remainingTreesNumber" :key="discoveredTrees.length + n -1">
                 <tree-card class="mb-2" :treeNumber="discoveredTrees.length + n" :discovered="false"></tree-card>
             </v-col>
-            </v-row>
+        </v-row>
     </v-container>
 </template>
 
@@ -29,7 +46,13 @@ export default {
     TreeCard
   },
   data: () => ({
+      userDiscoveredTreesByPark: [],
+      userRemainingTreesByPark: 0,
   }),
+
+  mounted(){
+      this.getUserTreesByPark();
+  },
 
   computed: {
       storedTrees(){
@@ -39,9 +62,21 @@ export default {
           return this.$store.getters.userTrees;
       },
       remainingTreesNumber(){
+          if(this.$store.getters.storedTrees - this.$store.getters.userTrees.length > 0)
           return this.$store.getters.storedTrees - this.$store.getters.userTrees.length;
+      },
+      parkTrees(){
+          if(this.$store.getters.selectedPark.id != undefined){
+              return this.$store.getters.selectedParkTrees
+          }
+          return 0;
+      },
+      isSpecificPark(){
+          if(this.$store.getters.selectedPark.id != undefined){
+              return true
+          }
+          return false;
       }
-
   },
 
   methods: {
@@ -49,6 +84,27 @@ export default {
         this.$store.commit('setScannedTree', tree)
         this.$store.commit('setMenuTitle', tree.common_name)
         this.$router.push('/colecao/detalhes')
+    },
+    getUserTreesByPark(){
+        let parkTrees = this.parkTrees;
+        let userTrees = this.discoveredTrees;
+        if(this.isSpecificPark){
+            let found = false;
+            for(let parkTree of parkTrees){
+                for(let userTree of userTrees){
+                    if(parkTree.id == userTree.id){
+                        this.userDiscoveredTreesByPark.push(parkTree);
+                        found = true;
+                        break;
+                    }
+                }
+                    if(!found){
+                        this.userRemainingTreesByPark += 1;
+                    }
+                    found = false;
+            }
+        }
+
     }
   }
 
