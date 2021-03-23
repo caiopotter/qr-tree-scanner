@@ -1,33 +1,35 @@
 <template>
   <v-container class="map-auto-fill">
       <l-map
+        ref="map"
         :preferCanvas="true"
         :zoom="zoom"
         :minZoom="16"
         :maxZoom="19"
         :center="formatMapCenterCoordinates"
-        @update:zoom="zoomUpdated"
-        @update:center="centerUpdated"
-        @update:bounds="boundsUpdated"
       >
       <l-tile-layer :options="{ maxZoom: 19, preferCanvas:true }" :url="url"></l-tile-layer>
       <l-circle-marker v-for="(tree, index) in parkTrees" :key="index" :lat-lng="formatCoordinates(tree)" :radius="5" :color="'green'">
         <l-popup>{{tree.common_name}}</l-popup>
       </l-circle-marker>
+      <l-control position="topleft">
+        <v-btn color="white" :style="{'color':'var(--v-forest-base)'}" fab x-small @click="centralizeMap">
+          <v-icon>mdi-crosshairs-gps</v-icon>
+        </v-btn>
+      </l-control>
     </l-map>
 
   </v-container>
 </template>
 
 <script>
-import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader';
-import L from 'leaflet';
-import { LMap, LTileLayer, LMarker, LGeoJson, LCircleMarker, LPopup } from 'vue2-leaflet';
+import { LMap, LTileLayer, LMarker, LControl, LGeoJson, LCircleMarker, LPopup } from 'vue2-leaflet';
 
 export default {
   name: 'GardenMap',
   components: {
     LMap,
+    LControl,
     LTileLayer,
     LMarker,
     LGeoJson,
@@ -55,10 +57,13 @@ export default {
   data: () => ({
     url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
     zoom: 17,
-    bounds: undefined,
   }),
 
   methods: {
+    centralizeMap(){
+      let center = {lat:this.formatMapCenterCoordinates[0], lng:this.formatMapCenterCoordinates[1]}
+      this.$refs.map.mapObject.panTo(center)
+    },
     formatCoordinates(tree){
       let latlng = [];
       if(tree && tree.pivot && tree.pivot.map_latitude && tree.pivot.map_longitude){
@@ -68,18 +73,6 @@ export default {
         latlng = ['0', '0']
       }
       return latlng;
-    },
-    zoomUpdated (zoom) {
-      this.zoom = zoom;
-    },
-    centerUpdated (center) {
-      this.center = center;
-    },
-    boundsUpdated (bounds) {
-      this.bounds = bounds;
-    },
-    doSomethingOnReady(){
-      this.map = this.$refs.myMap.mapObject
     },
   }
 
