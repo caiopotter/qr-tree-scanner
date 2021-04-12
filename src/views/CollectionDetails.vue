@@ -6,13 +6,22 @@
                 <v-img v-else :src="require('../assets/PequenaFlorestaSemTextoSemFundo.png')" height="400px" contain></v-img>
                 <v-card-actions>
                     <v-row>
-                        <v-col class="mb-n4" cols="12">
-                            <span style="font-weight:bold;">Nome popular: {{selectedTree.common_name}}</span>
+                        <v-col class="mb-n4 ml-2" cols="12">
+                            <span style="font-weight:bold;">Nome popular: </span>
+                            <br>
+                            <span>{{selectedTree.common_name}}</span>
                         </v-col>
-                        <v-col class="mb-n2" cols="12">
-                            <span style="font-weight:bold;">Nome científico: {{selectedTree.scientific_name}}</span>
+                        <v-col class="mb-n4 ml-2" cols="12">
+                            <span style="font-weight:bold;">Nome científico: </span>
+                            <br>
+                            <span>{{selectedTree.scientific_name}}</span>
                         </v-col>
-                        <v-col class="mb-n4" cols="12">
+                        <v-col v-for="(feature, index) in treeShortFeatures" :key="index" class="mb-n4 ml-2" cols="12">
+                            <span style="font-weight:bold;">{{feature.question}}: </span>
+                            <br>
+                            <span>{{feature.answer}}</span>
+                        </v-col>
+                        <v-col class="mb-n4 mt-2" cols="12">
                             <v-btn class="mb-1" block rounded @click="featuresExpand = !featuresExpand">
                                 Características
                                 <v-spacer></v-spacer>
@@ -81,6 +90,7 @@ export default {
       originExpand: false,
       woodTypeExpand: false,
       utilityExpand: false,
+      treeShortFeatures: [],
   }),
 
   computed: {
@@ -126,6 +136,9 @@ export default {
       if(this.$store.getters.scannedTree.id == undefined){
           this.$router.push('/colecao')
       }
+      this.$store.dispatch('getTreeShortFeatures', this.selectedTree.id).then(res => {
+          this.treeShortFeatures = res.data
+      })
     }
 
 }
