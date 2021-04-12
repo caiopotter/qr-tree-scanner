@@ -22,6 +22,13 @@ export default{
         }
       })
     },
+    getTreeShortFeatures(treeId){
+      return axios.get('/api/tree/short-features', {
+        params: {
+          treeId: treeId
+        }
+      })
+    },
     addTreeComment(treeData){
       return axios.post('/api/tree/comment', treeData)
     }

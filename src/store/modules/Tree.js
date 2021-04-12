@@ -105,6 +105,21 @@ const actions= {
             console.log(error);
             return error
         }
+  },
+  async getTreeShortFeatures(context, payload){
+    try{
+        Api.isWaitingResponse(context, true);
+
+        const treeShortFeatures = await TreeApi.getTreeShortFeatures(payload);
+
+        Api.isWaitingResponse(context, false);
+
+        return treeShortFeatures;
+
+        }catch(error){
+            console.log(error);
+            return error
+        }
   }
 }
 
