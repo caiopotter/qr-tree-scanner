@@ -15,7 +15,7 @@
             </v-card>    
         </v-dialog>
         <v-row>
-            <v-card @click="setPreSelectPark" outlined :style="[park.id == preSelectedPark.id ? {'border': '1px solid green'} : {'border': '1px solid lightgray'}, {'width':'100%'}]"> 
+            <v-card disabled @click="setPreSelectPark" outlined :style="[park.id == preSelectedPark.id ? {'border': '1px solid green'} : {'border': '1px solid lightgray'}, {'width':'100%'}]"> 
                 <v-row no-gutters>
                     <v-col cols="11">
                 <v-card-title style="font-size:1.1em">{{park.name}}</v-card-title>

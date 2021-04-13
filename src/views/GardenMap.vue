@@ -5,10 +5,10 @@
         :preferCanvas="true"
         :zoom="zoom"
         :minZoom="16"
-        :maxZoom="19"
+        :maxZoom="20"
         :center="formatMapCenterCoordinates"
       >
-      <l-tile-layer :options="{ maxZoom: 19, preferCanvas:true }" :url="url"></l-tile-layer>
+      <l-tile-layer :options="{ maxZoom: 20, preferCanvas:true }" :url="url"></l-tile-layer>
       <l-circle-marker v-for="(tree, index) in parkTrees" :key="index" :lat-lng="formatCoordinates(tree)" :radius="5" :color="'green'">
         <l-popup>{{tree.common_name}}</l-popup>
       </l-circle-marker>
