@@ -109,7 +109,6 @@ export default {
         this.$store.dispatch('getParkTreesFromServer', response.data[0].id);
       }
     })
-    //this.$store.commit('setSelectedPark', {id:undefined, name:'Sem parque', address:'Visualizar os dados de todos os locais'});
 
   },
   data: () => ({
