@@ -17,7 +17,7 @@
         </v-btn>
       </l-control>
     </l-map>
-    <v-bottom-sheet v-model="bottomSheet">
+    <v-bottom-sheet @click:outside="closeBottomSheet" v-model="bottomSheet">
       <v-card>
         <v-card-title :style="{'background-color': 'var(--v-forest-base)', 'color': 'white'}">{{selectedTree.common_name}}
           <v-spacer></v-spacer>
@@ -82,7 +82,10 @@ export default {
     userDiscoveryTreeDate(){
       let selectedTreeDiscover = this.userTrees.filter(tree => (tree.id == this.selectedTree.id))
       if(selectedTreeDiscover.length > 0){
-        return `Árvore descoberta em ${this.formatDateTime(selectedTreeDiscover[0].pivot.created_at)}!`
+        if(selectedTreeDiscover[0].pivot && selectedTreeDiscover[0].pivot.created_at){
+          return `Árvore descoberta em ${this.formatDateTime(selectedTreeDiscover[0].pivot.created_at)}`
+        }
+        return "Árvore descoberta!"
       }
       return "Árvore ainda não descoberta."
     },
