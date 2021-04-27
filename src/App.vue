@@ -152,16 +152,16 @@ export default {
       }
     },
     logout(){
-      if(this.$store.getters.isVisitor){
-        this.$store.commit('setUserIsVisitor', false);
-        this.$store.commit('clearUserDiscoveredTrees');
-        this.$router.push('/login');
-      }else{
+      if(!this.$store.getters.isVisitor){
         this.$store.dispatch('logout').then(() => {
           this.$store.commit('clearUserDiscoveredTrees');
           this.$store.commit('SET_LOGGEDIN_USER', {user: null});
           this.$router.push('/login');
         });
+      }else{
+        this.$store.commit('setUserIsVisitor', false);
+        this.$store.commit('clearUserDiscoveredTrees');
+        this.$router.push('/login');
       }
       this.menu = false;
     },
