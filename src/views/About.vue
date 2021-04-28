@@ -2,19 +2,19 @@
   <v-container>
     <v-card flat>
         <v-card-title>
-          Sobre o App
+          Sobre a Aplicação
         </v-card-title>
-        <v-card-text style="font-weight: bold">
+        <v-card-text class="text-justify" style="font-weight: bold">
           Você sabia que o bosque do CEFET-RJ é um jardim centenário e que era parte do jardim da família real portuguesa? 
           O bosque possui grande valor histórico e informativo, e foi tombado em 2004.
           O que significa que ele é um patrimônio registrado e protegido por lei contra destruição/descaracterização.
         </v-card-text>
-        <v-card-text style="font-weight: bold">
+        <v-card-text class="text-justify" style="font-weight: bold">
           O bosque possui flora variada, com espécies nativas e exóticas, tendo até mesmo exemplares raros no Brasil.
           Acreditamos que as árvores presentes no bosque contam com diversas informações interessantes e até mesmo valiosas.
           Porém, essas informações não estão sendo repassadas à comunidade que frequenta o espaço cotidianamente.
         </v-card-text>
-        <v-card-text style="font-weight: bold">
+        <v-card-text class="text-justify" style="font-weight: bold">
           O Objetivo deste aplicativo é centralizar as informações contidas no jardim, proporcionando um lugar de troca de conhecimento biológico e geografico entre os usuários e frequentadores do espaço.
         </v-card-text>
     </v-card>
