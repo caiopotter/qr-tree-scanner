@@ -164,7 +164,6 @@ export default {
         getTreeComments(){
             this.$store.dispatch('getTreeComments', this.selectedTree.id).then(response => {
                 this.treeComments = response.data;
-                console.log('created', this.treeComments)
             });        
         },
         sendComment(){

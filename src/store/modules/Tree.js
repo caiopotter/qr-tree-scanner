@@ -19,7 +19,6 @@ const getters= {
 
 const mutations= {
     setstoredTrees(state, payload){
-        console.log(payload.trees)
         state.storedTrees= payload.trees;
     },
     setScannedTree(state, payload){
