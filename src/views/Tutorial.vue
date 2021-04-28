@@ -50,7 +50,7 @@
     </v-btn>
     <v-expand-transition mode="out-in">
       <v-card v-if="scannerExpand" outlined class="mb-2">
-        <v-card-text class="text-justify">Abre a câmera do smartphone para que o usuário leia o QR Code (código de barras tri-dimensional) posicionado perto da árvore. Cada árvore cadastrada no sistema possui seu próprio QR Code.</v-card-text>
+        <v-card-text class="text-justify">Abre a câmera do smartphone para que o usuário leia o QR Code (código de barras em matriz) posicionado perto da árvore. Cada árvore cadastrada no sistema possui seu próprio QR Code.</v-card-text>
         <v-card-text class="text-justify">Ao realizar uma leitura bem sucedida, o sistema redireciona o usuário para a tela de detalhes da árvore correspondente, bem como registra a árvore como descoberta.</v-card-text>
       </v-card>
     </v-expand-transition>
