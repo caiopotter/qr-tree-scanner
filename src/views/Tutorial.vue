@@ -36,8 +36,9 @@
     </v-btn>
     <v-expand-transition mode="out-in">
       <v-card v-if="parksExpand" outlined class="mb-2">
-        <v-card-text class="text-justify">Tela de seleção de parques. Cada parque possui árvores específicas e em lugares específicos. Com múltiplos parques, os usuários podem aproveitar a aplicação em diferentes locais do Rio de Janeiro</v-card-text>
-        <v-card-text class="text-justify">Essa tela é um esboço que representa a escalabilidade do sistema. Como no momento, o foco desse trabalho é o bosque do CEFET-RJ, a seleção de parques está desabilitada.</v-card-text>
+        <v-card-text class="text-justify">Tela de seleção de parques. Cada parque possui árvores específicas e em lugares específicos. Com múltiplos parques, os usuários podem utilizar a aplicação em diferentes localidades.</v-card-text>
+        <v-card-text class="text-justify">A seleção de parques é liberada ao usuário uma vez que ele descubra um número determinado de árvores no parque principal. Esse número pode ser consultado na própria aba de parques.</v-card-text>
+        <v-card-text class="text-justify">Essa tela é um esboço que representa a escalabilidade do sistema. O foco desse trabalho é o bosque do CEFET-RJ, e como consequência, os outros parques dessa tela são exemplos e não refletem a realidade.</v-card-text>
       </v-card>
     </v-expand-transition>
 
