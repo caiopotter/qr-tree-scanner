@@ -71,8 +71,9 @@ const actions= {
         return scannedTree;
 
         }catch(error){
+            Api.isWaitingResponse(context, false);
             console.log(error);
-            return error
+            return {error: true, log: error}
         }
   },
   async addTreeComment(context, payload){
