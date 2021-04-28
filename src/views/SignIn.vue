@@ -52,6 +52,7 @@
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :type="showPassword ? 'text' : 'password'"
               @click:append="showPassword = !showPassword"
+              @keydown="verifyKeyPressed"
               prepend-inner-icon="mdi-key"
             ></v-text-field>
         </div>
@@ -178,6 +179,11 @@ import ForgotPasswordForm from '@/components/ForgotPasswordForm.vue'
         this.loading = false;
         this.$router.push('/colecao');
       },
+      verifyKeyPressed(e){
+        if(e.keyCode == 13){
+          this.loginAttempt()
+        }
+      }
     },
     beforeCreate(){
       if(this.$store.getters.userAuthState){
