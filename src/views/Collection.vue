@@ -45,7 +45,7 @@
                     :src="require('@/assets/pequenaFlorestaCinzaSemFundoIcone.png')"
                     height="200px"
                 ></v-img>
-                <v-card-text>Nenhuma árvore adicionada nesse parque</v-card-text>
+                <v-card-text class="text-center">Nenhuma árvore adicionada nesse parque</v-card-text>
             </v-card>
         </v-row>
     </v-container>
