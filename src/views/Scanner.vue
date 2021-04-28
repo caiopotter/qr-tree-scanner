@@ -1,17 +1,13 @@
 <template>
   <v-container class="auto-fill">
       <qrcode-stream :camera="camera" @decode="onDecode">
-      <div v-if="validationSuccess" class="validation-success">
-        This is a URL
-      </div>
-
-      <div v-if="validationFailure" class="validation-failure">
-        This is NOT a URL!
-      </div>
-
-      <div v-if="validationPending" class="validation-pending">
-        Long validation in progress...
-      </div>
+      <v-snackbar
+        v-model="invalidCode"
+        :timeout="timeout"
+        color="forest"
+      >
+      Código não encontrado
+      </v-snackbar>
     </qrcode-stream>
   </v-container>
 </template>
@@ -30,7 +26,9 @@ export default {
   data: () => ({
     result: '',
     camera: 'auto',
-    isValid: undefined
+    isValid: undefined,
+    invalidCode: false,
+    timeout: 5000,
   }),
 
   computed: {
@@ -59,10 +57,15 @@ export default {
       this.turnCameraOff()
       this.result = result
       this.isValid = this.checkCodeDatabase(result)
+      this.resetValidationState()
       this.turnCameraOn()
     },
     async checkCodeDatabase(result){
       this.$store.dispatch('getQRCodeTree', result).then(response => {
+        if(response.error) {
+          this.invalidCode = true;
+          return false;
+        }
         let isQRCodeRepeated = false;
         for(let discoveredTree of this.userDiscoveredTrees){
           if(discoveredTree.id == response.data.id){
@@ -78,11 +81,13 @@ export default {
         }
         this.$store.commit('setScannedTree', response.data);
         this.$store.commit('setMenuTitle', response.data.common_name);
+        this.turnCameraOff()
         this.$router.push('/colecao/detalhes')
       });
     },
     resetValidationState () {
       this.isValid = undefined
+      this.result = ''
     },
     turnCameraOn () {
       this.camera = 'auto'
