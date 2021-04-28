@@ -68,15 +68,19 @@
           <v-icon v-else>mdi-arrow-collapse-left</v-icon>
           </v-btn>
       </div>
-      <v-row no-gutters v-else>
+      <v-row no-gutters v-if="isCollectionDetailsScreen && !isLoading">
           <v-col cols="10">
             <span style="color:white; font-size:1.2em">{{menuTitle}}</span>
           </v-col>
-          <v-col class="text-rigth ml-3">
+          <v-col class="text-right ml-3">
             <v-icon @click="$router.push('/colecao')" class="left-absolute-align" style="color:white">mdi-close</v-icon>
           </v-col>
         </v-row>
-
+      <v-row v-if="isLoading" no-gutters>
+        <v-col class="text-right">
+          <v-progress-circular class="left-absolute-align" indeterminate color=white></v-progress-circular>
+        </v-col>
+      </v-row>
       <v-spacer></v-spacer>
     </v-app-bar>
 
@@ -140,6 +144,9 @@ export default {
     },
     selectedPark(){
       return this.$store.getters.selectedPark
+    },
+    isLoading(){
+      return this.$store.getters.loading
     }
 
   },
