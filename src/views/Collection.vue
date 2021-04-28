@@ -9,7 +9,7 @@
             </v-col>
             <v-col cols="12" class="mt-n2">
                 <v-progress-circular v-if="loading" indeterminate color=forest></v-progress-circular>
-                <span v-else style="font-weight: bold; font-size: 0.9em">{{userDiscoveredTreesByPark.length}} de {{parkTrees.length}} árvores descobertas</span>
+                <span v-else style="font-weight: bold; font-size: 0.9em">{{userDiscoveredTreesByPark.length}} de {{parkTreesNumber}} árvores descobertas</span>
             </v-col>
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(tree, index) in userDiscoveredTreesByPark" :key="index">
                 <tree-card :treeNumber="index+1" :tree="tree" :discovered="true" @details="details"></tree-card>
@@ -38,6 +38,15 @@
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(n) in remainingTreesNumber" :key="discoveredTrees.length + n -1">
                 <tree-card class="mb-2" :treeNumber="discoveredTrees.length + n" :discovered="false"></tree-card>
             </v-col>
+        </v-row>
+        <v-row v-if="(parkTreesNumber == 0) && !isLoading">
+            <v-card flat>
+                <v-img
+                    :src="require('@/assets/pequenaFlorestaCinzaSemFundoIcone.png')"
+                    height="200px"
+                ></v-img>
+                <v-card-text>Nenhuma árvore adicionada nesse parque</v-card-text>
+            </v-card>
         </v-row>
     </v-container>
 </template>
@@ -77,6 +86,12 @@ export default {
           }
           return 0;
       },
+      parkTreesNumber(){
+          if(this.$store.getters.selectedPark.id != undefined){
+              return this.$store.getters.selectedParkTrees.length
+          }
+          return 0;
+      },
       isSpecificPark(){
           if(this.$store.getters.selectedPark.id != undefined){
               return true
@@ -92,6 +107,9 @@ export default {
           if(this.$store.getters.selectedPark.id != undefined){
               return this.$store.getters.selectedPark.id
           }
+      },
+      isLoading(){
+          return this.$store.getters.loading
       }
   },
 
