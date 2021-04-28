@@ -2,7 +2,13 @@
   <v-container>
         <v-row>
             <v-col cols="12">
-                <span style="font-weight: bold; font-size: 1.3em">Clique em um cartão para selecionar um parque da lista:</span>
+                <span style="font-weight: bold; font-size: 1.3em">Seleção de parques</span>
+            </v-col>
+            <v-col cols="12">
+                <v-card flat>
+                    <v-card-text class="text-justify" style="font-weight: bold; font-size: 0.9em">No momento, somente o Bosque do CEFET-RJ está disponível. Por este motivo, a seleção de parques está desativada.</v-card-text>
+                    <v-card-text class="text-justify mt-n4" style="font-weight: bold; font-size: 0.9em">Em breve, novos parques serão adicionados e a funcionalidade será reativada.</v-card-text>
+                </v-card>
             </v-col>
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3">
                 <park-card @setPreSelectPark="setPreSelectPark" :park="{id:undefined, name:'Sem parque', address:'Visualizar os dados de todos os locais'}" :hasHelp="false"></park-card>
