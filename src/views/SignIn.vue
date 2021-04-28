@@ -159,6 +159,11 @@ import ForgotPasswordForm from '@/components/ForgotPasswordForm.vue'
             setTimeout(()=>{
               this.errorMessage = ''
             },5000);
+          }else{
+            this.errorMessage = 'Ocorreu um erro inesperado'
+            setTimeout(()=>{
+              this.errorMessage = ''
+            },5000);
           }
         }finally{
           this.loading = false
