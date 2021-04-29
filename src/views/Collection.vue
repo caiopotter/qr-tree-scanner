@@ -8,7 +8,7 @@
                 <span style="font-weight: bold; font-size: 0.9em">{{selectedParkName}}</span>
             </v-col>
             <v-col cols="12" class="mt-n2">
-                <v-progress-circular v-if="loading" indeterminate color=forest></v-progress-circular>
+                <v-progress-circular v-if="isLoading" indeterminate color=forest></v-progress-circular>
                 <span v-else style="font-weight: bold; font-size: 0.9em">{{userDiscoveredTreesByPark.length}} de {{parkTreesNumber}} árvores descobertas</span>
             </v-col>
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(tree, index) in userDiscoveredTreesByPark" :key="index">
@@ -26,7 +26,7 @@
                 <span style="font-weight: bold; font-size: 1.3em">Sua coleção:</span>
             </v-col>
             <v-col cols="12" class="mt-n6">
-                <v-progress-circular v-if="loading" indeterminate color=forest></v-progress-circular>
+                <v-progress-circular v-if="isLoading" indeterminate color=forest></v-progress-circular>
                 <span v-else style="font-weight: bold; font-size: 0.9em">{{discoveredTrees.length}} de {{storedTrees}} árvores descobertas</span>
             </v-col>
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(tree, index) in discoveredTrees" :key="index">
@@ -62,7 +62,6 @@ export default {
   data: () => ({
       userDiscoveredTreesByPark: [],
       userRemainingTreesByPark: 0,
-      loading: false,
   }),
 
   mounted(){
@@ -84,7 +83,7 @@ export default {
           if(this.$store.getters.selectedPark.id != undefined){
               return this.$store.getters.selectedParkTrees
           }
-          return 0;
+          return [];
       },
       parkTreesNumber(){
           if(this.$store.getters.selectedPark.id != undefined){
@@ -104,9 +103,7 @@ export default {
           }
       },
       selectedParkId(){
-          if(this.$store.getters.selectedPark.id != undefined){
-              return this.$store.getters.selectedPark.id
-          }
+        return this.$store.getters.selectedPark.id
       },
       isLoading(){
           return this.$store.getters.loading
@@ -120,45 +117,47 @@ export default {
         this.$router.push('/colecao/detalhes')
     },
     waitforParkQueries(){
-        this.loading = true;
-        try{
-            this.$store.dispatch('getParksFromServer').then(response => {
-                if(response.data.length > 0){
-                    /* this.$store.commit('setSelectedPark', response.data[0])
-                    this.$store.commit('setPreSelectedPark', response.data[0]); */
-                    this.$store.dispatch('getParkTreesFromServer', this.selectedParkId).then(() =>{
+        this.$store.dispatch('getParksFromServer').then(response => {
+            if(response.data.length > 0){
+                if(this.selectedParkId === undefined){
+                    this.$store.commit('setSelectedPark', response.data[0])
+                    this.$store.commit('setPreSelectedPark', response.data[0]);
+                    this.$store.dispatch('getParkTreesFromServer', response.data[0].id).then(() =>{
                         this.getUserTreesByPark();
-                        this.loading = false;
                     })
                 }else{
-                    this.loading = false;
+                    this.$store.dispatch('getParkTreesFromServer', this.selectedParkId).then(() =>{
+                        this.getUserTreesByPark();
+                    })
                 }
-            })
-        }catch(e){
-            this.loading = false;
-        }
+            }
+        })
         
     },
     getUserTreesByPark(){
-        let parkTrees = this.parkTrees;
-        let userTrees = this.discoveredTrees;
-        if(this.isSpecificPark){
-            let found = false;
-            for(let parkTree of parkTrees){
-                for(let userTree of userTrees){
-                    if(parkTree.id == userTree.id){
-                        this.userDiscoveredTreesByPark.push(parkTree);
-                        found = true;
-                        break;
-                    }
+        this.$store.dispatch('getUserDiscoveredTrees').then(res => {
+            let parkTrees = this.parkTrees;
+            let userTrees = this.discoveredTrees;
+            if(this.isSpecificPark){
+                let found = false;
+                if(!Array.isArray(parkTrees)){
+                    return []
                 }
-                    if(!found){
-                        this.userRemainingTreesByPark += 1;
+                for(let parkTree of parkTrees){
+                    for(let userTree of userTrees){
+                        if(parkTree.id == userTree.id){
+                            this.userDiscoveredTreesByPark.push(parkTree);
+                            found = true;
+                            break;
+                        }
                     }
-                    found = false;
+                        if(!found){
+                            this.userRemainingTreesByPark += 1;
+                        }
+                        found = false;
+                }
             }
-        }
-
+        })
     }
   }
 
