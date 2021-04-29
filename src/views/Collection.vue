@@ -7,6 +7,12 @@
             <v-col class="mt-n6" cols="12">
                 <span style="font-weight: bold; font-size: 0.9em">{{selectedParkName}}</span>
             </v-col>
+            <v-col class="mt-n6" cols="12">
+                <span style="font-weight: bold; font-size: 0.9em">Para descobrir novas árvores, clique no botão abaixo:</span>
+            </v-col>
+            <v-col class="mt-n6" cols="12">
+                <v-btn @click="$router.push('/scan')" outlined color="forest"><v-icon class="mr-2">mdi-qrcode-scan</v-icon>Escanear código</v-btn>
+            </v-col>
             <v-col cols="12" class="mt-n2">
                 <v-progress-circular v-if="isLoading" indeterminate color=forest></v-progress-circular>
                 <span v-else style="font-weight: bold; font-size: 0.9em">{{userDiscoveredTreesByPark.length}} de {{parkTreesNumber}} árvores descobertas</span>
@@ -77,7 +83,7 @@ export default {
       },
       remainingTreesNumber(){
           if(this.$store.getters.storedTrees - this.$store.getters.userTrees.length > 0)
-          return this.$store.getters.storedTrees - this.$store.getters.userTrees.length;
+            return this.$store.getters.storedTrees - this.$store.getters.userTrees.length;
       },
       parkTrees(){
           if(this.$store.getters.selectedPark.id != undefined){
@@ -107,6 +113,9 @@ export default {
       },
       isLoading(){
           return this.$store.getters.loading
+      },
+      userIsVisitor(){
+          return this.$store.getters.isVisitor
       }
   },
 
@@ -135,6 +144,15 @@ export default {
         
     },
     getUserTreesByPark(){
+        if(this.userIsVisitor){
+            if(this.discoveredTrees && this.discoveredTrees.length > 0){
+                this.userRemainingTreesByPark = this.remainingTreesNumber;
+                this.userDiscoveredTreesByPark = this.discoveredTrees;
+            }else{
+                this.userRemainingTreesByPark = this.parkTrees.length;
+            }
+            return;
+        }
         this.$store.dispatch('getUserDiscoveredTrees').then(res => {
             let parkTrees = this.parkTrees;
             let userTrees = this.discoveredTrees;
