@@ -1,5 +1,35 @@
 <template>
   <v-container class="auto-fill">
+    <v-dialog v-model="limitedFeatureDialog" max-width="500px">
+      <v-card style="overflow: hidden">
+        <v-card-title class="mt-n1" :style="{'background-color': 'var(--v-' + 'forest' + '-base)'}">
+          <span style="color:white; font-size:0.9em">
+              Leitor de QR Code
+          </span>
+          <v-spacer></v-spacer>
+          <v-icon @click="limitedFeatureDialog = false" style="color:white">mdi-close</v-icon>
+        </v-card-title>
+        <v-card-actions>
+          <v-row class="text-center">
+            <v-col cols="12">
+              <span style="color:grey; font-size:0.9em">O leitor de QR Code foi criado para ler os códigos de barras instalados perto das árvores, em cada parque. 
+                Por conta da COVID-19, todas as árvores estão disponíveis para consulta no mapa.</span>
+            </v-col>
+            <v-col cols="6">
+              <v-btn outlined color="forest" style="color:white"
+                @click="limitedFeatureDialog = false">Continuar
+              </v-btn>
+            </v-col>
+            <v-col cols="6">
+              <v-btn color="forest" style="color:white"
+                @click="$router.go(-1)">Retornar
+              </v-btn>
+            </v-col>
+          </v-row>
+          
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
       <qrcode-stream :camera="camera" @decode="onDecode">
       <v-snackbar
         v-model="invalidCode"
@@ -29,7 +59,12 @@ export default {
     isValid: undefined,
     invalidCode: false,
     timeout: 5000,
+    limitedFeatureDialog: false,
   }),
+
+  mounted(){
+    this.showLimitedFeatureDialog();
+  },
 
   computed: {
     validationPending () {
@@ -53,6 +88,9 @@ export default {
   },
 
   methods: {
+    showLimitedFeatureDialog(){
+      this.limitedFeatureDialog = true;
+    },
     onDecode(result){
       this.turnCameraOff()
       this.result = result

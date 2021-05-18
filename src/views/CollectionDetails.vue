@@ -2,8 +2,14 @@
     <v-card flat>
         <v-card-actions>
             <v-card flat>
-                <v-img v-if="selectedTree.url" :src="selectedTree.url" height="400px" contain></v-img>
-                <v-img v-else :src="require('../assets/PequenaFlorestaSemTextoSemFundo.png')" height="400px" contain></v-img>
+                <v-card outlined>
+                    <v-card-actions>
+                        <v-img v-if="selectedTree.url" :src="selectedTree.url" max-height="500px" contain></v-img>
+                        <v-img v-else :src="require('../assets/PequenaFlorestaSemTextoSemFundo.png')" max-height="500px" contain></v-img>
+                    </v-card-actions>
+                    <v-card-text>Fonte: -- Inserir fonte --</v-card-text>
+                </v-card>
+                
                 <v-card-actions>
                     <v-row>
                         <v-col class="mb-n4 ml-2" cols="12">
@@ -14,7 +20,7 @@
                         <v-col class="mb-n4 ml-2" cols="12">
                             <span style="font-weight:bold;">Nome científico: </span>
                             <br>
-                            <span>{{selectedTree.scientific_name}}</span>
+                            <span style="font-style: italic">{{selectedTree.scientific_name}}</span>
                         </v-col>
                         <v-col v-for="(feature, index) in treeShortFeatures" :key="index" class="mb-n4 ml-2" cols="12">
                             <span style="font-weight:bold;">{{feature.question}}: </span>

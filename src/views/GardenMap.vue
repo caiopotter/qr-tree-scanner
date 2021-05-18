@@ -9,6 +9,7 @@
         :center="formatMapCenterCoordinates"
       >
       <l-tile-layer :options="{ maxZoom: 20, preferCanvas:true }" :url="url"></l-tile-layer>
+      <l-control-scale position="topright" :imperial="false" :metric="true"></l-control-scale>
       <l-circle-marker v-for="(tree, index) in parkTrees" :key="index" :lat-lng="formatCoordinates(tree)" :radius="7" :color="tree.id == selectedTree.id ? 'red' : 'green'" @click="toggleBottomSheet(tree)">
       </l-circle-marker>
       <l-control position="topleft">
@@ -37,7 +38,7 @@
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LControl, LGeoJson, LCircleMarker, LPopup } from 'vue2-leaflet';
+import { LMap, LTileLayer, LMarker, LControlScale, LControl, LGeoJson, LCircleMarker, LPopup } from 'vue2-leaflet';
 
 export default {
   name: 'GardenMap',
@@ -48,6 +49,7 @@ export default {
     LMarker,
     LGeoJson,
     LCircleMarker,
+    LControlScale,
     LPopup
   },
   computed:{
