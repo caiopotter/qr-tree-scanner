@@ -16,6 +16,10 @@
         <v-btn color="white" :style="{'color':'var(--v-forest-base)'}" fab x-small @click="centralizeMap">
           <v-icon>mdi-crosshairs-gps</v-icon>
         </v-btn>
+        <br>
+        <v-btn class="mt-2" color="white" :style="{'color':'var(--v-forest-base)'}" fab x-small @click="openSubtitleHelp">
+          <v-icon>mdi-help</v-icon>
+        </v-btn>
       </l-control>
     </l-map>
     <v-bottom-sheet :max-width="500" @click:outside="closeBottomSheet" v-model="bottomSheet">
@@ -32,6 +36,42 @@
             Explorar
           </v-btn>
         </v-card-actions>
+      </v-card>
+    </v-bottom-sheet>
+    <v-bottom-sheet :max-width="500" @click:outside="closeBottomSheet" v-model="subtitleHelp">
+      <v-card>
+        <v-card-title :style="{'background-color': 'var(--v-forest-base)', 'color': 'white'}">Legenda
+          <v-spacer></v-spacer>
+          <v-icon @click="closeSubtitleHelp" style="color:white">mdi-close</v-icon>
+        </v-card-title>
+        <v-card-text>
+          <div :style="{'font-weight': 'bold'}" class="mt-2">
+            <v-row>
+              <v-col cols="1">
+                <v-badge class="green-badge" bordered color="green"></v-badge>
+              </v-col>
+              <v-col>
+                <span>Árvore explorada</span>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="1">
+                <v-badge class="yellow-badge" bordered color="yellow"></v-badge>
+              </v-col>
+              <v-col>
+                <span>Árvore não explorada</span>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="1">
+                <v-badge class="red-badge" bordered color="red"></v-badge>
+              </v-col>
+              <v-col>
+                <span>Árvore selecionada</span>
+              </v-col>
+            </v-row>
+          </div>
+        </v-card-text>
       </v-card>
     </v-bottom-sheet>
   </v-container>
@@ -80,6 +120,7 @@ export default {
     url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
     zoom: 19,
     bottomSheet: false,
+    subtitleHelp: false,
     selectedTree: {}
   }),
 
@@ -112,6 +153,12 @@ export default {
     },
     formatDateTime(dateTime){
       return moment(dateTime).format("DD/MM/YYYY HH:mm:ss")
+    },
+    openSubtitleHelp(){
+      this.subtitleHelp = true;
+    },
+    closeSubtitleHelp(){
+      this.subtitleHelp = false;
     },
     toggleBottomSheet(tree){
       if(tree.pivot && tree.pivot.map_latitude && tree.pivot.map_longitude){
@@ -151,5 +198,15 @@ export default {
         margin:-12px;
         height: 100vh;
         position: fixed;
+    }
+
+    .green-badge .v-badge__badge::after{
+      border-color: #256100 !important;
+    }
+    .yellow-badge .v-badge__badge::after{
+      border-color: #bbb800 !important;
+    }
+    .red-badge .v-badge__badge::after{
+      border-color: #790000 !important;
     }
 </style>
