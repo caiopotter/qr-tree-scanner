@@ -43,6 +43,7 @@ const mutations= {
   },
 
   setUserDiscoveredTrees(state, payload){
+    state.userTrees = [];
     for(let tree of payload){
       state.userTrees.push(tree);
     }
