@@ -10,7 +10,7 @@
       >
       <l-tile-layer :options="{ maxZoom: 20, preferCanvas:true }" :url="url"></l-tile-layer>
       <l-control-scale position="topright" :imperial="false" :metric="true"></l-control-scale>
-      <l-circle-marker v-for="(tree, index) in parkTrees" :key="index" :lat-lng="formatCoordinates(tree)" :radius="7" :color="tree.id == selectedTree.id ? 'red' : 'green'" @click="toggleBottomSheet(tree)">
+      <l-circle-marker v-for="(tree, index) in parkTrees" :key="index" :lat-lng="formatCoordinates(tree)" :radius="7" :color="tree.id == selectedTree.id ? 'red' : userTrees.map(tr => {return tr.id}).indexOf(tree.id) > -1 ? 'green' : 'yellow'" @click="toggleBottomSheet(tree)">
       </l-circle-marker>
       <l-control position="topleft">
         <v-btn color="white" :style="{'color':'var(--v-forest-base)'}" fab x-small @click="centralizeMap">
@@ -18,7 +18,7 @@
         </v-btn>
       </l-control>
     </l-map>
-    <v-bottom-sheet @click:outside="closeBottomSheet" v-model="bottomSheet">
+    <v-bottom-sheet :max-width="500" @click:outside="closeBottomSheet" v-model="bottomSheet">
       <v-card>
         <v-card-title :style="{'background-color': 'var(--v-forest-base)', 'color': 'white'}">{{selectedTree.common_name}}
           <v-spacer></v-spacer>
@@ -28,8 +28,8 @@
           <div :style="{'font-weight': 'bold'}" class="mt-2">{{userDiscoveryTreeDate()}}</div>
         </v-card-text>
         <v-card-actions :style="{'display':'grid'}">
-          <v-btn :style="{'grid-column-start':'12'}" color="forest" outlined @click="goToDetails(selectedTree)">
-            Detalhes
+          <v-btn :style="{'grid-column-start':'12', 'color': 'white'}" color="forest" @click="goToDetails(selectedTree)">
+            Explorar
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -71,6 +71,9 @@ export default {
         coords.push(park.map_center_latitude);
         coords.push(park.map_center_longitude);
         return coords;
+    },
+    userIsVisitor(){
+      return this.$store.getters.isVisitor
     }
   },
   data: () => ({
@@ -119,9 +122,18 @@ export default {
       this.selectedTree = tree;
     },
     goToDetails(tree){
+      this.exploreNewTrees(tree);
       this.$store.commit('setScannedTree', tree)
       this.$store.commit('setMenuTitle', tree.common_name)
       this.$router.push('/colecao/detalhes')
+    },
+    exploreNewTrees(tree){
+      if(this.userTrees.map(tr => {return tr.id}).indexOf(tree.id) == -1){
+        if(!this.userIsVisitor){
+          this.$store.dispatch('setTreeDiscovered', tree.id);
+        }
+        this.$store.commit('addTreeToUserDiscoveredTreesArray', tree);
+      }
     },
     closeBottomSheet(){
       this.selectedTree = {}

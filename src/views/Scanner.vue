@@ -22,7 +22,7 @@
             </v-col>
             <v-col cols="6">
               <v-btn color="forest" style="color:white"
-                @click="$router.go(-1)">Retornar
+                @click="$router.push('/mapa')">Mapa
               </v-btn>
             </v-col>
           </v-row>
