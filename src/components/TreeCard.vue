@@ -2,6 +2,7 @@
     <v-row>
         <v-col>
             <v-card
+                outlined
                 class="mx-auto"
                 max-width="344"
             >
@@ -29,8 +30,8 @@
                 </v-card-subtitle>
             
                 <v-card-actions>
-                    <v-col cols="12" class="mt-n8 text-right">
-                        <v-btn :style="{border: '1px solid var(--v-forest-base)'}" :disabled="!discovered" color="forest" outlined @click="getDetails">
+                    <v-col cols="12" class="mt-n6 text-right">
+                        <v-btn :style="discovered ? {border: '1px solid var(--v-forest-base)'} : {}" :disabled="!discovered" color="forest" outlined @click="getDetails">
                             <v-icon>mdi-plus</v-icon>
                             Detalhes
                             </v-btn>
