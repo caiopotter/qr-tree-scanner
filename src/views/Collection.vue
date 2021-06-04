@@ -18,7 +18,7 @@
                 <span v-else style="font-weight: bold; font-size: 0.9em">{{userDiscoveredTreesByPark.length}} de {{parkTreesNumber}} árvores descobertas</span>
             </v-col>
             <v-col class="mb-n6" cols="12" sm="6" md="4" lg="3" v-for="(tree, index) in userDiscoveredTreesByPark" :key="index">
-                <tree-card :treeNumber="index+1" :tree="tree" :discovered="true" @details="details"></tree-card>
+                <tree-card :treeNumber="index+1" :tree="tree" :cover="treesCoverPictures.filter(pictures => {return pictures.tree_id == tree.id})" :discovered="true" @details="details"></tree-card>
             </v-col>
             <v-col cols="12" class="mt-6" v-if="userRemainingTreesByPark > 0">
                 <span style="font-weight: bold; font-size: 1.3em">Árvores restantes:</span>
@@ -71,6 +71,8 @@ export default {
   }),
 
   mounted(){
+      this.clearTreePictures();
+      this.getTreesCoverPictures();
       this.waitforParkQueries();
   },
 
@@ -116,6 +118,9 @@ export default {
       },
       userIsVisitor(){
           return this.$store.getters.isVisitor
+      },
+      treesCoverPictures(){
+          return this.$store.getters.treesCoverPictures
       }
   },
 
@@ -142,6 +147,12 @@ export default {
             }
         })
         
+    },
+    getTreesCoverPictures(){
+        this.$store.dispatch('getTreesCoverPictures');
+    },
+    clearTreePictures(){
+        this.$store.commit('setTreePictures', {pictures: []});
     },
     getUserTreesByPark(){
         if(this.userIsVisitor){

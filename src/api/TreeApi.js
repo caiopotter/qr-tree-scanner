@@ -31,5 +31,15 @@ export default{
     },
     addTreeComment(treeData){
       return axios.post('/api/tree/comment', treeData)
+    },
+    getTreePictures(treeId){
+      return axios.get('/api/tree-pictures', {
+        params: {
+          treeId: treeId
+        }
+      });
+    },
+    getTreesCoverPictures(){
+      return axios.get('/api/trees-cover-pictures');
     }
   }

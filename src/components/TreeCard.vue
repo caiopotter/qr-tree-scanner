@@ -11,7 +11,7 @@
                     height="200px"
                 ></v-img>
                 <v-img v-else
-                    :src="tree.url ? tree.url : require('../assets/PequenaFlorestaSemTextoSemFundo.png')"
+                    :src="(cover[0] && cover[0].url) ? cover[0].url : require('../assets/PequenaFlorestaSemTextoSemFundo.png')"
                     height="200px"
                 ></v-img>
             
@@ -47,7 +47,7 @@
 <script>
 export default {
     name: "TreeCard",
-    props:['treeNumber', 'tree', 'discovered'],
+    props:['treeNumber', 'tree', 'discovered', 'cover'],
     data: () => ({
     }),
 

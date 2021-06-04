@@ -4,10 +4,23 @@
             <v-card flat>
                 <v-card outlined>
                     <v-card-actions>
-                        <v-img v-if="selectedTree.url" :src="selectedTree.url" max-height="500px" contain></v-img>
+                        <v-carousel v-if="treePictures.length" @change="setNewActivePicture" height="auto">
+                            <v-carousel-item v-for="(picture, i) in treePictures" 
+                            :key="i"
+                            
+                            >
+                            <v-img
+                                contain
+                                :src="picture.url"
+                                max-height="700"
+                                class="grey darken-4"
+                            ></v-img>
+                            </v-carousel-item>
+                        </v-carousel>
                         <v-img v-else :src="require('../assets/PequenaFlorestaSemTextoSemFundo.png')" max-height="500px" contain></v-img>
                     </v-card-actions>
-                    <v-card-text>Fonte: -- Inserir fonte --</v-card-text>
+                    <v-card-text v-if="treePictures.length">{{treePictures[actualSlide].description}}</v-card-text>
+                    <v-card-text v-if="treePictures.length">Fonte: {{treePictures[actualSlide].source}}</v-card-text>
                 </v-card>
                 
                 <v-card-actions>
@@ -90,6 +103,7 @@ export default {
       Comments
   },
   data: () => ({
+      actualSlide: 0,
       expandTreeText: false,
       treeTextLengthLimit: 150,
       featuresExpand: false,
@@ -126,6 +140,9 @@ export default {
           }
           return discoveredTrees;
       },
+      treePictures(){
+          return this.$store.getters.treePictures;
+      }
 
   },
 
@@ -137,6 +154,9 @@ export default {
           case 'family': return 'Família';
         }
       },
+    setNewActivePicture(value){
+        this.actualSlide = value
+    }
   },
   mounted(){
       if(this.$store.getters.scannedTree.id == undefined){
@@ -145,6 +165,7 @@ export default {
       this.$store.dispatch('getTreeShortFeatures', this.selectedTree.id).then(res => {
           this.treeShortFeatures = res.data
       })
+      this.$store.dispatch('getTreePictures', this.selectedTree.id)
     }
 
 }

@@ -6,6 +6,8 @@ import store from '..'
 const state= {
     storedTrees: [],
     scannedTree: {},
+    treePictures: [],
+    treesCoverPictures: []
 }
 
 const getters= {
@@ -14,15 +16,27 @@ const getters= {
     },
     scannedTree(state){
         return state.scannedTree;
+    },
+    treePictures(state){
+        return state.treePictures;
+    },
+    treesCoverPictures(state){
+        return state.treesCoverPictures;
     }
 }
 
 const mutations= {
     setstoredTrees(state, payload){
-        state.storedTrees= payload.trees;
+        state.storedTrees = payload.trees;
     },
     setScannedTree(state, payload){
         state.scannedTree = payload;
+    },
+    setTreePictures(state, payload){
+        state.treePictures = payload.pictures
+    },
+    setTreesCoverPictures(state, payload){
+        state.treesCoverPictures = payload.pictures
     }
 }
 
@@ -115,6 +129,42 @@ const actions= {
         Api.isWaitingResponse(context, false);
 
         return treeShortFeatures;
+
+        }catch(error){
+            console.log(error);
+            return error
+        }
+  },
+  async getTreePictures(context, payload){
+    try{
+        Api.isWaitingResponse(context, true);
+
+        const treePictures = await TreeApi.getTreePictures(payload);
+        context.commit('setTreePictures', {
+            pictures: treePictures.data
+        });
+
+        Api.isWaitingResponse(context, false);
+
+        return treePictures;
+
+        }catch(error){
+            console.log(error);
+            return error
+        }
+  },
+  async getTreesCoverPictures(context){
+    try{
+        Api.isWaitingResponse(context, true);
+
+        const treesCoverPictures = await TreeApi.getTreesCoverPictures();
+        context.commit('setTreesCoverPictures', {
+            pictures: treesCoverPictures.data
+        });
+
+        Api.isWaitingResponse(context, false);
+
+        return treesCoverPictures;
 
         }catch(error){
             console.log(error);
