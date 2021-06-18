@@ -4,16 +4,15 @@
             <v-card flat>
                 <v-card outlined>
                     <v-card-actions>
-                        <v-carousel v-if="treePictures.length" @change="setNewActivePicture" height="auto">
+                        <v-carousel :show-arrows="false" class="carousel" v-if="treePictures.length" @change="setNewActivePicture">
                             <v-carousel-item v-for="(picture, i) in treePictures" 
                             :key="i"
                             
                             >
                             <v-img
+                                class="carousel grey lighten-2"
                                 contain
                                 :src="picture.url"
-                                max-height="700"
-                                class="grey darken-4"
                             ></v-img>
                             </v-carousel-item>
                         </v-carousel>
@@ -170,3 +169,8 @@ export default {
 
 }
 </script>
+<style>
+    .carousel {
+        height: 60vh !important;
+    }
+</style>
