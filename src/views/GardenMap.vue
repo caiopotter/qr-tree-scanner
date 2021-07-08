@@ -5,7 +5,7 @@
         :preferCanvas="true"
         :zoom="zoom"
         :minZoom="18"
-        :maxZoom="20"
+        :maxZoom="19"
         :center="formatMapCenterCoordinates"
       >
       <l-tile-layer :options="{ maxZoom: 20, preferCanvas:true }" :url="url"></l-tile-layer>
@@ -117,6 +117,7 @@ export default {
     }
   },
   data: () => ({
+    //url: `https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=${process.env.MAP_API_KEY}`,
     url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
     zoom: 19,
     bottomSheet: false,

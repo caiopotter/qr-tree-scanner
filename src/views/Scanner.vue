@@ -13,7 +13,7 @@
           <v-row class="text-center">
             <v-col cols="12">
               <span style="color:grey; font-size:0.9em">O leitor de QR Code foi criado para ler os códigos de barras instalados perto das árvores, em cada parque. 
-                Por conta da COVID-19, todas as árvores estão disponíveis para consulta no mapa.</span>
+                Por conta da COVID-19, a exploração das árvores está sendo realizada no mapa da aplicação.</span>
             </v-col>
             <v-col cols="6">
               <v-btn outlined color="forest" style="color:white"
