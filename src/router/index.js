@@ -7,6 +7,8 @@ import CollectionDetails from '../views/CollectionDetails.vue'
 import GardenMap from '../views/GardenMap.vue'
 import Tutorial from '../views/Tutorial.vue'
 import ParkList from '../views/ParkList.vue'
+import About from '../views/About.vue'
+import Intro from '../views/Intro.vue'
 
 Vue.use(VueRouter)
 
@@ -51,12 +53,14 @@ const routes = [
     component: ParkList
   },
   {
+    path: '/intro',
+    name: 'Intro',
+    component: Intro
+  },
+  {
     path: '/sobre',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: About
   },
 
   { path: '*', redirect: '/colecao' }

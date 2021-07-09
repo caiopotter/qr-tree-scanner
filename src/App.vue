@@ -58,7 +58,7 @@
           </v-list-item>
         </v-list>
     </v-navigation-drawer>
-    <v-app-bar v-if="!$route.path.includes('login')"
+    <v-app-bar v-if="!$route.path.includes('login') && !$route.path.includes('intro')"
       app
       color="forest"
     >
