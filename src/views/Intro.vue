@@ -1,11 +1,11 @@
 <template>
     <v-container>
-        <v-carousel :continuous="false" :value="carouselValue" hide-delimiters :show-arrows="false" @change="test">
+        <v-carousel :continuous="false" hide-delimiter-background delimiter-icon="mdi-minus" :value="carouselValue" :show-arrows="false" @change="syncSlide">
             <v-carousel-item
-            v-for="i in slides"
-            :key="i"
+                v-for="(item, index) in carouselItens"
+                :key="index"
             >
-           <div>{{i}}</div>
+                <v-img :src="require(`../assets/intro/${item}`)"></v-img>
             </v-carousel-item>
         </v-carousel>
         
@@ -14,12 +14,13 @@
                 <v-btn
                     :disabled="carouselValue == 0"
                     @click="previousSlide"
-                    color="success"
+                    color="leaf"
                     >Anterior</v-btn>
                 <v-btn
+                    style="color:white"
                     @click="nextSlide"
-                    color="info"
-                    >{{carouselValue == this.slides - 1 ? 'Entendi' : 'Próximo'}}</v-btn>
+                    color="forest"
+                    >{{carouselValue == this.carouselItens.length - 1 ? 'Entendi' : 'Próximo'}}</v-btn>
             </v-card-actions>
         </v-card>
         
@@ -28,18 +29,19 @@
 </template>
 
 <script>
+
 export default {
     name: 'Intro',
     data: () => ({
         carouselValue: 0,
-        slides: 5
+        carouselItens: ['intro.png', 'map.png', 'details.png', 'collection.png']
     }),
     methods: {
-        test(e){
+        syncSlide(e){
             this.carouselValue = e;
         },
         nextSlide(){
-            if(this.carouselValue < this.slides - 1){
+            if(this.carouselValue < this.carouselItens.length - 1){
                 this.carouselValue = this.carouselValue + 1;
             }
         },
@@ -53,5 +55,7 @@ export default {
 </script>
 
 <style>
-
+    .theme--dark.v-btn.v-btn--icon{
+        color: var(--v-forest-base)
+    }
 </style>
