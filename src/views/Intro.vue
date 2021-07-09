@@ -1,7 +1,6 @@
 <template>
     <v-container style="text-align: -webkit-center;">
         <v-carousel 
-            height="auto"
             light
             class="intro"
             :continuous="false"
@@ -66,12 +65,15 @@ export default {
 </script>
 
 <style>
+    .intro{
+        height: 50vh !important;
+    }
     @media only screen and (min-width: 600px) {
         .intro{
             width:50%;
         }
     }
-    @media only screen and (min-width: 1500px) {
+    @media only screen and (min-width: 1200px) {
         .intro{
             width:30%;
         }
