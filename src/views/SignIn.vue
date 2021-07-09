@@ -151,7 +151,7 @@ import ForgotPasswordForm from '@/components/ForgotPasswordForm.vue'
           let result = await this.validateUserData();
           this.$store.dispatch('getTreesFromServer');
           this.$store.dispatch('getUserDiscoveredTrees', this.$store.getters.user.id).then(res => {
-            this.$router.push('/colecao')
+            this.$router.push('/intro')
           })
         }catch (e){
           if(e == 'Error: Request failed with status code 401'){
@@ -182,7 +182,7 @@ import ForgotPasswordForm from '@/components/ForgotPasswordForm.vue'
         this.$store.commit('setUserIsVisitor', true);
         this.$store.dispatch('getTreesFromServer');
         this.loading = false;
-        this.$router.push('/colecao');
+        this.$router.push('/intro');
       },
       verifyKeyPressed(e){
         if(e.keyCode == 13){
