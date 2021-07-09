@@ -8,7 +8,7 @@
         :maxZoom="19"
         :center="formatMapCenterCoordinates"
       >
-      <l-tile-layer :options="{ maxZoom: 20, preferCanvas:true }" :url="url"></l-tile-layer>
+      <l-tile-layer :options="{ maxZoom: 19, preferCanvas:true }" :url="url"></l-tile-layer>
       <l-control-scale position="topright" :imperial="false" :metric="true"></l-control-scale>
       <l-circle-marker v-for="(tree, index) in parkTrees" :key="index" :lat-lng="formatCoordinates(tree)" :radius="7" :color="tree.id == selectedTree.id ? 'red' : userTrees.map(tr => {return tr.id}).indexOf(tree.id) > -1 ? 'green' : 'yellow'" @click="toggleBottomSheet(tree)">
       </l-circle-marker>
