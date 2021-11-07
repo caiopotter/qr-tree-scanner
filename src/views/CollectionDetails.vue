@@ -4,7 +4,7 @@
             <v-card flat>
                 <v-card outlined>
                     <v-card-actions>
-                        <v-carousel :show-arrows="false" class="carousel" v-if="treePictures.length" @change="setNewActivePicture">
+                        <v-carousel :show-arrows="isCarrouselArrowsEnabled" class="carousel" v-if="treePictures.length" @change="setNewActivePicture">
                             <v-carousel-item v-for="(picture, i) in treePictures" 
                             :key="i"
                             
@@ -113,6 +113,9 @@ export default {
   }),
 
   computed: {
+      isCarrouselArrowsEnabled(){
+          return (this.$vuetify.breakpoint.width > 640)
+      },
       selectedTree(){
         return this.$store.getters.scannedTree;
       },
