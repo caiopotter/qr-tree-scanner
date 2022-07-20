@@ -11,7 +11,7 @@
     "deploy": "aws s3 sync ./dist s3://qr-tree-scanner-front-https"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.2",
     "core-js": "^3.6.4",
     "css-loader": "^3.4.2",
     "image-map": "^2.0.0",
